@@ -1,0 +1,445 @@
+.divider:after,
+.divider:before {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #eee;
+}
+
+.h-custom {
+  height: calc(100% - 73px);
+}
+
+@media (max-width: 450px) {
+  .h-custom {
+    height: 100%;
+  }
+}
+
+/* Media Queries for smaller devices */
+/* @media (max-width: 992px) {
+  .footer {
+    margin-top: 50px; 
+    padding: 15px 0;
+  }
+
+  .h-custom {
+    height: auto;
+  }
+
+  .container {
+    min-height: 100%;
+  }
+
+  .footer .row {
+    flex-direction: column;
+  }
+} */
+
+@media (max-width: 600px) {
+  /* For screens smaller than 600px */
+  .footer {
+    margin-top: 20px;
+    padding: 10px 0;
+  }
+
+  .h-custom {
+    height: auto;
+  }
+
+  .footer .container {
+    padding: 0 10px;
+  }
+
+  .footer .col-md-3,
+  .footer .col-md-2 {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .footer .col-md-4 {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+}
+
+.error {
+  color: red;
+  font-size: 0.875rem;
+  border-radius: 5px;
+  margin-top: 5px;
+  padding-left: 5px;
+  background-color: rgb(253, 226, 226);
+}
+
+button:disabled {
+  cursor: not-allowed;
+  /* Display the not-allowed cursor */
+  background-color: gray;
+  border-color: gray;
+  opacity: 0.6;
+  /* Optional: Make the disabled button look less prominent */
+}
+
+/* Change color of all Font Awesome icons in footer */
+.footer .fab {
+  color: #ffffff; /* White color for icons */
+}
+
+/* Hover effect to change icon color */
+.footer .fab:hover {
+  color: #ff6347; /* Change color on hover (Tomato red) */
+}
+
+/* Customize individual icon colors if needed */
+.footer .fab.fa-facebook-f {
+  color: #3b5998; /* Facebook blue */
+}
+
+.footer .fab.fa-twitter {
+  color: #1da1f2; /* Twitter blue */
+}
+
+.footer .fab.fa-instagram {
+  color: #e4405f; /* Instagram red-pink */
+}
+
+/* Base Styles */
+/* .footer {
+  font-family: 'Poppins', sans-serif;
+  margin-top: 50px;
+} */
+
+/* Icon Styles */
+.footer .fab {
+  color: #ffffff;
+  transition: color 0.3s ease;
+}
+
+.footer .fab:hover {
+  color: #4a90e2; /* Aviation blue */
+}
+
+/* Custom icons for specific platforms */
+.footer .fab.fa-facebook-f:hover {
+  color: #3b5998;
+}
+
+.footer .fab.fa-twitter:hover {
+  color: #1da1f2;
+}
+
+.footer .fab.fa-instagram:hover {
+  color: #e4405f;
+}
+
+.footer .fab.fa-linkedin:hover {
+  color: #0077b5;
+}
+
+.footer .fab.fa-youtube:hover {
+  color: #ff0000;
+}
+
+/* Links */
+.footer a.text-reset {
+  transition: color 0.3s ease, transform 0.3s ease;
+  display: inline-block;
+}
+
+.footer a.text-reset:hover {
+  color: #4a90e2 !important;
+  transform: translateX(5px);
+  text-decoration: none;
+}
+
+/* Media Queries */
+/* @media (max-width: 992px) {
+  .footer {
+    margin-top: 50px;
+    padding: 15px 0;
+  }
+} */
+
+@media (max-width: 600px) {
+  .footer {
+    /* margin-top: 20px; */
+    padding: 10px 0;
+  }
+
+  .footer .container {
+    padding: 0 10px;
+  }
+
+  .footer .col-md-3,
+  .footer .col-md-2 {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .footer .col-md-4 {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+}
+
+/* Terms and Conditions Checkbox */
+.terms-checkbox {
+  display: flex;
+  align-items: flex-start;
+}
+
+.terms-checkbox input {
+  margin-top: 3px;
+  margin-right: 10px;
+}
+
+.terms-checkbox label {
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.terms-checkbox a {
+  color: #0053b3;
+  text-decoration: none;
+}
+
+.terms-checkbox a:hover {
+  text-decoration: underline;
+}
+
+/* Password toggle feature */
+.password-input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.password-toggle-icon {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #555;
+}
+
+.password-toggle-icon:hover {
+  color: #0053b3;
+}
+
+.spinner-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.8); /* Black with transparency */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1050;
+}
+
+.animated-dots .dots::after {
+  content: "";
+  display: inline-block;
+  animation: dotsAnim 1.5s infinite;
+}
+
+@keyframes dotsAnim {
+  0% {
+    content: ".";
+  }
+  25% {
+    content: "..";
+  }
+  50% {
+    content: "...";
+  }
+  75% {
+    content: "..";
+  }
+  100% {
+    content: ".";
+  }
+}
+
+/* Modal Styles for Terms & Conditions and Privacy Policy */
+.custom-modal .modal-dialog {
+  max-width: 700px;
+}
+
+.custom-modal .modal-content {
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.custom-modal .modal-header {
+  border-bottom: none;
+  padding: 20px 25px 0;
+}
+
+.modal-title-container {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+.modal-title {
+  color: #0053b3;
+  font-weight: 600;
+  font-size: 22px;
+}
+
+.modal-accent {
+  height: 3px;
+  background-color: #ff6b00;
+  width: 70%;
+  margin-top: 5px;
+  border-radius: 2px;
+}
+
+.custom-modal .modal-body {
+  padding: 20px 30px 30px;
+  max-height: 70vh;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
+.modal-icon-container {
+  text-align: center;
+  /* margin-bottom: 20px; */
+}
+
+.modal-icon {
+  font-size: 48px;
+  color: #0053b3;
+}
+
+.policy-section {
+  margin-bottom: 25px;
+}
+
+.policy-section h5 {
+  color: #0053b3;
+  font-size: 17px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.section-number {
+  display: inline-block;
+  background-color: #0053b3;
+  color: white;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 24px;
+  margin-right: 10px;
+  font-size: 14px;
+}
+
+.policy-section p {
+  color: #555;
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 8px;
+  padding-left: 34px;
+}
+
+.policy-section p strong {
+  font-weight: 600;
+  color: #444;
+}
+
+.custom-modal .modal-footer {
+  border-top: none;
+  padding: 15px 25px 25px;
+  justify-content: center;
+}
+
+.modal-close-btn {
+  background-color: #0053b3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 25px;
+  font-size: 16px;
+  font-weight: 500;
+  transition: background-color 0.3s;
+}
+
+.modal-close-btn:hover {
+  background-color: #003d84;
+  color: white;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .custom-modal .modal-dialog {
+    max-width: 90%;
+    margin: 30px auto;
+  }
+
+  .custom-modal .modal-body {
+    padding: 15px 20px;
+  }
+
+  .section-number {
+    width: 22px;
+    height: 22px;
+    line-height: 22px;
+  }
+
+  .policy-section p {
+    padding-left: 32px;
+  }
+}
+
+@media (max-width: 576px) {
+  .custom-modal .modal-body {
+    max-height: 65vh;
+  }
+
+  .modal-title {
+    font-size: 20px;
+  }
+
+  .policy-section h5 {
+    font-size: 16px;
+  }
+
+  .policy-section p {
+    font-size: 13px;
+    padding-left: 30px;
+  }
+
+  .section-number {
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+  }
+
+  .modal-close-btn {
+    padding: 8px 20px;
+    font-size: 15px;
+  }
+}
+
+.smooth-scroll-link {
+  transition: all 0.3s ease;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* This class is added to the body when navigating between pages */
+body.page-transition {
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}

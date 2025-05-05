@@ -1,0 +1,159 @@
+<div class="flight-search-container">
+    <!-- Flight route header -->
+    <div class="route-header">
+        <div class="route-info">
+            <div class="route-path">
+                <span class="departure">{{ flightResults[0]?.departureAirport | titlecase }}</span>
+                <span class="route-arrow"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
+                        width="24px" fill="#1f1f1f">
+                        <path
+                            d="m397-115-99-184-184-99 71-70 145 25 102-102-317-135 84-86 385 68 124-124q23-23 57-23t57 23q23 23 23 56.5T822-709L697-584l68 384-85 85-136-317-102 102 26 144-71 71Z" />
+                    </svg></span>
+                <span class="arrival">{{ flightResults[0]?.arrivalAirport | titlecase }}</span>
+            </div>
+            <div class="trip-details">
+                <span>One Way</span> • <span>{{count}} </span><span *ngIf="count<=1">passenger</span><span
+                    *ngIf="count>1">passengers</span>
+                <a class="link" routerLink="/flight-booking">Change search</a>
+            </div>
+        </div>
+
+        <!-- <div class="price-summary">
+            <button class="summary-button">
+                View summary
+                <i class="fas fa-chevron-down"></i>
+            </button>
+        </div> -->
+    </div>
+
+    <!-- Page title section -->
+    <div class="page-header">
+        <div>
+            <h1 class="page-title">Choose your outbound flight</h1>
+            <p class="page-small-title">{{ flightResults[0]?.departureAirport | titlecase}} to
+                {{flightResults[0]?.arrivalAirport | titlecase}}
+            </p>
+        </div>
+        <div>
+            <div class="price-info">
+                <div class="price-label">Lowest total price for <span>{{count}}</span><span *ngIf="count<=1"> passenger
+                    </span><span *ngIf="count>1"> passengers </span> <span class="currency-type">INR</span> <span
+                        class="total-price"> {{ getLowestPrice() }}</span></div>
+                <!-- <div class="total-price">
+                ₹{{ getLowestPrice() }}
+            </div> -->
+                <div class="price-details">Inclusive of airfare, taxes, fees and carrier imposed charges</div>
+                <!-- <div class="currency-selector">
+                <button class="currency-button">
+                    Change currency
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+            </div> -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!---------------------------------------------------------------------->
+<div class="flight-details-main">
+    <div class="flight-list">
+        <div class="wrapper">
+            <span class="current-date">{{ flightResults[0]?.departureDate | date:'EEEE, d MMMM y' }} </span><span
+                class="option" *ngIf="flightResults.length==1">({{flightResults.length}}
+                option)</span><span *ngIf="flightResults.length>1">({{flightResults.length}} options)</span>
+        </div>
+        <hr>
+        <!-- Flight result cards -->
+        <div class="filter-container">
+            <div class="sort-dropdown" (clickOutside)="isFilterOpen = false">
+                <button class="sort-button" (click)="toggleFilter()">
+                    <span class="sort-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="4" y1="6" x2="20" y2="6"></line>
+                            <line x1="4" y1="12" x2="14" y2="12"></line>
+                            <line x1="4" y1="18" x2="8" y2="18"></line>
+                        </svg>
+                    </span>
+                    <span class="sort-class">Sort:</span>
+                    <span class="sort-text"> {{ sortCriteria }}</span>
+                    <span class="sort-arrow" [ngClass]="{'open': isFilterOpen}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </span>
+                </button>
+
+                <div class="sort-options" *ngIf="isFilterOpen">
+                    <div class="sort-header">Sort by</div>
+                    <div class="options-grid">
+                        <div class="option-item" *ngFor="let option of sortOptions" (click)="selectSortOption(option)"
+                            [ngClass]="{'active': sortCriteria === option.label}">
+                            {{ option.label }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flight-results">
+            <div class="flight-card" *ngFor="let flight of flightResults; let i = index; trackBy: trackByFn"
+                (click)="bookFlight(flight)">
+                <div class="flight-details">
+                    <div class="times-route">
+                        <div class="departure-details">
+                            <!-- <div style="font-size: medium;">{{ flight.airlineName }}</div> -->
+                            <div class="date">{{ flight.departureDate | date:'EEE dd MMM' }}</div>
+                            <div class="time">{{ flight.departureTime | timeFormat }}</div>
+                            <div class="airport-code">{{ getAirportName(flight.departureAirport | titlecase) }}</div>
+                            <div class="airport-name">{{ flight.departureAirport | titlecase}}</div>
+                        </div>
+
+                        <div class="flight-duration">
+                            <div class="duration-text">{{ formatDuration(flight.durationMinutes) }}</div>
+                            <!-- &#8594; -->
+                            <!-- &#x1F822; -->
+                            <div class="route-line">
+                                <div class="line"></div>
+                            </div>
+                            <div class="connection-info" *ngIf="flight.connection">
+                                Connects in {{ flight.connection }}
+                            </div>
+                        </div>
+
+                        <div class="arrival-details">
+                            <div class="date">{{ flight.arrivalDate | date:'EEE dd MMM' }}</div>
+                            <div class="time">{{ flight.arrivalTime | timeFormat }}</div>
+                            <div class="airport-code">{{ getAirportName(flight.arrivalAirport | titlecase) }}</div>
+                            <div class="airport-name">{{ flight.arrivalAirport | titlecase }}</div>
+                        </div>
+                    </div>
+
+                    <div class="price-column">
+                        <div class="cabin-class">{{ flight.flightClass }} <span> class</span></div>
+                        <div class="price-display">
+                            <div>
+                                <span class="price-label">from </span>
+                                <span class="currency-type">INR <span class="total-price">{{ flight.price
+                                        }}</span></span>
+                            </div>
+                            <div *ngIf="getLowestPriceValue()==flight.price" class="price-tag">Lowest price</div>
+                        </div>
+                        <!-- <button class="select-flight-button" (click)="bookFlight(flight)">
+                            Select
+                        </button> -->
+                    </div>
+                </div>
+
+                <div class="flight-info">
+                    <div class="aircraft-info">
+                        <img class="airline-logo" src="https://c.ekstatic.net/shared/icons/tailfin/ek.svg">
+                        <span>{{ flight.flightNumber }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- </div> -->

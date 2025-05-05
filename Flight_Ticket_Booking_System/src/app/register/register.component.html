@@ -1,0 +1,324 @@
+<section class="vh-100">
+    <div class="container-fluid h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <!-- Left side Image -->
+            <div class="col-md-9 col-lg-6 col-xl-5">
+                <img src="registration.jpg" class="img-fluid" alt="JetWayz Registration Banner">
+            </div>
+            <!-- Registration Form -->
+            <div class="col-md-8 col-lg-6 col-xl-5 mt-4" style="justify-items: center;">
+                <div class="register-container">
+                    <div class="register-header">
+                        <h2>Create an Account</h2>
+                        <p>Experience hassle-free flight booking with JetWayz</p>
+                        <div class="orange-accent"></div>
+                    </div>
+
+                    <form #registrationForm="ngForm" (ngSubmit)="onRegisterSubmit(registrationForm)">
+                        <!-- Name input -->
+                        <div class="form-group">
+                            <label for="name">Full Name:</label>
+                            <input type="text" id="name" class="form-control" name="name" ngModel required minlength="2"
+                                #name="ngModel" placeholder="Enter your full name" />
+                            <div *ngIf="name.invalid && name.touched" class="error-message">
+                                <div *ngIf="name.errors?.['required']">Name is required.</div>
+                                <div *ngIf="name.errors?.['minlength']">Name must be at least 2 characters long.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Email input -->
+                        <div class="form-group">
+                            <label for="email">Email Address:</label>
+                            <input type="email" id="email" class="form-control" name="email" ngModel required email
+                                #email="ngModel" placeholder="Enter your email address" />
+                            <div *ngIf="email.invalid && email.touched" class="error-message">
+                                <div *ngIf="email.errors?.['required']">Email is required.</div>
+                                <div *ngIf="email.errors?.['email']">Please enter a valid email address.</div>
+                            </div>
+                        </div>
+
+                        <!-- Mobile number input -->
+                        <div class="form-group">
+                            <label for="mobileNo">Mobile Number:</label>
+                            <input type="tel" id="mobileNo" class="form-control" name="mobileNo" ngModel required
+                                pattern="^\d{10}$" #mobileNo="ngModel" placeholder="Enter your mobile number" />
+                            <div *ngIf="mobileNo.invalid && mobileNo.touched" class="error-message">
+                                <div *ngIf="mobileNo.errors?.['required']">Mobile number is required.</div>
+                                <div *ngIf="mobileNo.errors?.['pattern']">Mobile number must be 10 digits.</div>
+                            </div>
+                        </div>
+
+                        <!-- Username input -->
+                        <div class="form-group">
+                            <label for="username">Username:</label>
+                            <input type="text" id="username" class="form-control" name="username" ngModel required
+                                pattern="^[a-zA-Z0-9_]+$" minlength="4" maxlength="15" #username="ngModel"
+                                placeholder="Choose a username" />
+                            <div *ngIf="username.invalid && username.touched" class="error-message">
+                                <div *ngIf="username.errors?.['required']">Username is required.</div>
+                                <div *ngIf="username.errors?.['pattern']">Username can only contain alphanumeric
+                                    characters.</div>
+                                <div *ngIf="username.errors?.['minlength']">Username must be at least 4 characters
+                                    long.
+                                </div>
+                                <div *ngIf="username.errors?.['maxlength']">Username cannot be more than 15
+                                    characters.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Password input -->
+                        <div class="form-group">
+                            <label for="password">Password:</label>
+                            <div class="password-input-wrapper">
+                                <input [type]="!showPassword ? 'text' : 'password'" id="password" class="form-control"
+                                    name="password" ngModel required minlength="8"
+                                    pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+                                    #password="ngModel" placeholder="Create a password" />
+                                <span class="password-toggle-icon" (click)="togglePasswordVisibility()">
+                                    <i class="fa"
+                                        [ngClass]="{'fa-eye': showPassword, 'fa-eye-slash': !showPassword}"></i>
+                                </span>
+                            </div>
+                            <div *ngIf="password.invalid && (password.dirty || password.touched)" class="error-message">
+                                <div *ngIf="password.errors?.['required']">Password is required.</div>
+                                <div *ngIf="password.errors?.['minlength']">Password must be at least 8 characters
+                                    long.
+                                </div>
+                                <div *ngIf="password.errors?.['pattern']">Password must include at least one
+                                    uppercase
+                                    letter, one lowercase letter, one number, and one special character.</div>
+                            </div>
+                        </div>
+
+                        <!-- Confirm Password input -->
+                        <div class="form-group">
+                            <label for="confirmPassword">Confirm Password:</label>
+                            <div class="password-input-wrapper">
+                                <input [type]="!showConfirmPassword ? 'text' : 'password'" id="confirmPassword"
+                                    class="form-control" name="confirmPassword" ngModel required minlength="8"
+                                    #confirmPassword="ngModel" placeholder="Confirm your password" />
+                                <span class="password-toggle-icon" (click)="toggleConfirmPasswordVisibility()">
+                                    <i class="fa"
+                                        [ngClass]="{'fa-eye': showConfirmPassword, 'fa-eye-slash': !showConfirmPassword}"></i>
+                                </span>
+                            </div>
+                            <div *ngIf="confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched)"
+                                class="error-message">
+                                <div *ngIf="confirmPassword.errors?.['required']">Please confirm your password.
+                                </div>
+                            </div>
+                            <div *ngIf="confirmPassword.touched && (password.value !== confirmPassword.value)"
+                                class="error-message">
+                                Passwords do not match.
+                            </div>
+                        </div>
+
+                        <!-- Terms and Conditions -->
+                        <div class="form-group terms-checkbox">
+                            <input class="me-2" type="checkbox" id="termsAndConditions" name="termsAndConditions"
+                                ngModel required #terms="ngModel" />
+                            <label for="termsAndConditions">
+                                I agree to the <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">Terms and
+                                    Conditions</a> and <a href="#" data-bs-toggle="modal"
+                                    data-bs-target="#privacyModal">Privacy
+                                    Policy</a>
+                            </label>
+                            <div *ngIf="terms.invalid && terms.touched" class="error-message">
+                                You must agree to the terms and conditions
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="register-button"
+                            [disabled]="registrationForm.invalid || password.value !== confirmPassword.value">Create
+                            Account</button>
+
+                        <div class="login-link">
+                            Already have an account? <a routerLink="/login">Log In</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Terms and Conditions Modal -->
+<div class="modal fade custom-modal" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title-container">
+                    <h5 class="modal-title" id="termsModalLabel">Terms and Conditions</h5>
+                    <div class="modal-accent"></div>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-icon-container">
+                    <i class="fa fa-file-text-o modal-icon"></i>
+                </div>
+                <h4 class="text-center mb-4">JetWayz Terms and Conditions</h4>
+
+                <div class="policy-section">
+                    <h5><span class="section-number">1.</span> Acceptance of Terms</h5>
+                    <p>By creating an account and using JetWayz services, you agree to be bound by these Terms and
+                        Conditions. If you do not agree to these terms, please do not use our services.</p>
+                </div>
+
+                <div class="policy-section">
+                    <h5><span class="section-number">2.</span> Registration and Account</h5>
+                    <p>2.1. You must provide accurate, current, and complete information during the registration
+                        process.</p>
+                    <p>2.2. You are responsible for maintaining the confidentiality of your account credentials.</p>
+                    <p>2.3. You are responsible for all activities that occur under your account.</p>
+                </div>
+
+                <div class="policy-section">
+                    <h5><span class="section-number">3.</span> Booking and Payment</h5>
+                    <p>3.1. All flight bookings are subject to availability and confirmation.</p>
+                    <p>3.2. Prices displayed include base fare and taxes but may not include optional services or
+                        baggage fees.</p>
+                    <p>3.3. We reserve the right to cancel bookings that we believe to be fraudulent.</p>
+                </div>
+
+                <div class="policy-section">
+                    <h5><span class="section-number">4.</span> Cancellations and Refunds</h5>
+                    <p>4.1. Cancellation policies vary by airline and fare type.</p>
+                    <p>4.2. Refund processing may take 5-15 business days depending on your payment method and financial
+                        institution.</p>
+                </div>
+
+                <div class="policy-section">
+                    <h5><span class="section-number">5.</span> User Conduct</h5>
+                    <p>5.1. You agree not to use our service for any unlawful purpose.</p>
+                    <p>5.2. You agree not to attempt to gain unauthorized access to any part of our service.</p>
+                </div>
+
+                <div class="policy-section">
+                    <h5><span class="section-number">6.</span> Limitation of Liability</h5>
+                    <p>6.1. JetWayz is not liable for any direct, indirect, incidental, or consequential damages arising
+                        from your use of our service.</p>
+                    <p>6.2. We are not responsible for flight delays, cancellations, or schedule changes made by
+                        airlines.</p>
+                </div>
+
+                <div class="policy-section">
+                    <h5><span class="section-number">7.</span> Modifications to Terms</h5>
+                    <p>We reserve the right to modify these terms at any time. Changes will be effective immediately
+                        upon posting on our website.</p>
+                </div>
+
+                <div class="policy-section">
+                    <h5><span class="section-number">8.</span> Governing Law</h5>
+                    <p>These terms shall be governed by and construed in accordance with the laws of the jurisdiction in
+                        which JetWayz operates.</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn modal-close-btn" data-bs-dismiss="modal">I Understand</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Privacy Policy Modal -->
+<div class="modal fade custom-modal" id="privacyModal" tabindex="-1" aria-labelledby="privacyModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title-container">
+                    <h5 class="modal-title" id="privacyModalLabel">Privacy Policy</h5>
+                    <div class="modal-accent"></div>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-icon-container">
+                    <i class="fa fa-shield modal-icon"></i>
+                </div>
+                <h4 class="text-center mb-4">JetWayz Privacy Policy</h4>
+
+                <div class="policy-section">
+                    <h5><span class="section-number">1.</span> Information We Collect</h5>
+                    <p><strong>1.1. Personal Information:</strong> Name, email address, phone number, billing address,
+                        and payment details.</p>
+                    <p><strong>1.2. Travel Information:</strong> Flight preferences, frequent flyer numbers, and travel
+                        history.</p>
+                    <p><strong>1.3. Technical Information:</strong> IP address, browser type, device information, and
+                        cookies.</p>
+                </div>
+
+                <div class="policy-section">
+                    <h5><span class="section-number">2.</span> How We Use Your Information</h5>
+                    <p>2.1. To process your flight bookings and payments.</p>
+                    <p>2.2. To provide customer support and respond to your inquiries.</p>
+                    <p>2.3. To send you promotional offers and updates with your consent.</p>
+                    <p>2.4. To improve our services and website functionality.</p>
+                    <p>2.5. To comply with legal obligations.</p>
+                </div>
+
+                <div class="policy-section">
+                    <h5><span class="section-number">3.</span> Information Sharing</h5>
+                    <p><strong>3.1. Service Providers:</strong> We share information with third-party service providers
+                        who assist us in providing our services.</p>
+                    <p><strong>3.2. Airlines and Travel Partners:</strong> We share necessary booking information with
+                        airlines and other travel partners to complete your reservation.</p>
+                    <p><strong>3.3. Legal Requirements:</strong> We may disclose information if required by law or
+                        governmental request.</p>
+                </div>
+
+                <div class="policy-section">
+                    <h5><span class="section-number">4.</span> Data Security</h5>
+                    <p>4.1. We implement appropriate security measures to protect your personal information.</p>
+                    <p>4.2. While we strive to protect your data, no method of transmission over the Internet is 100%
+                        secure.</p>
+                </div>
+
+                <div class="policy-section">
+                    <h5><span class="section-number">5.</span> Your Rights</h5>
+                    <p>5.1. You have the right to access, correct, or delete your personal information.</p>
+                    <p>5.2. You may opt out of marketing communications at any time.</p>
+                </div>
+
+                <div class="policy-section">
+                    <h5><span class="section-number">6.</span> Cookies</h5>
+                    <p>6.1. We use cookies to enhance your browsing experience and analyze website traffic.</p>
+                    <p>6.2. You can manage cookie preferences through your browser settings.</p>
+                </div>
+
+                <div class="policy-section">
+                    <h5><span class="section-number">7.</span> Children's Privacy</h5>
+                    <p>Our services are not intended for individuals under the age of 16. We do not knowingly collect
+                        information from children.</p>
+                </div>
+
+                <div class="policy-section">
+                    <h5><span class="section-number">8.</span> Changes to Privacy Policy</h5>
+                    <p>We may update this Privacy Policy from time to time. We will notify you of any significant
+                        changes.</p>
+                </div>
+
+                <div class="policy-section">
+                    <h5><span class="section-number">9.</span> Contact Us</h5>
+                    <p>If you have questions about this Privacy Policy, please contact us at privacy{{"@"}}jetwayz.com.</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn modal-close-btn" data-bs-dismiss="modal">I Understand</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="isLoading" class="spinner-overlay">
+    <div class="text-center">
+        <div class="spinner-border text-light mb-3" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+        <div class="text-light fs-4 animated-dots">Loading<span class="dots">.</span></div>
+    </div>
+</div>

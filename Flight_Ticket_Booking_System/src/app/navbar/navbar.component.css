@@ -1,0 +1,351 @@
+/* Hover effect for nav links */
+.navbar .nav-link:hover,
+.navbar .nav-link:focus {
+  background-color: #3e3e3e;
+  /* border-radius: 4px; /* Rounded corners */
+}
+
+/* Default navbar layout */
+#nav.navbar {
+  height: auto !important; /* Allow it to expand naturally */
+  position: relative;
+  z-index: 1; /* Lowered z-index to avoid overlay issues */
+}
+
+/* Navbar logo wrapper */
+.navbar-logo-wrapper {
+  height: 100px;
+  display: flex;
+  align-items: center;
+  padding: 0 15px;
+  position: relative;
+  margin-bottom: -40px;
+  z-index: 2;
+}
+
+/* Logo styling */
+.navbar-logo {
+  width: auto;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* Show desktop logo by default */
+.desktop-logo {
+  display: block;
+}
+
+/* Hide mobile logo by default */
+.mobile-logo {
+  display: none;
+}
+
+.navbar .nav-link {
+  font-size: 15px;
+  padding: 8px 12px;
+}
+
+/* Fix for navbar collapse and content shift */
+.navbar-collapse,
+.collapse,
+#navbarNav {
+  background-color: black;
+  width: 100%;
+  position: static !important;
+  transition: all 0.3s ease-in-out;
+}
+
+.navbar-collapse.show {
+  display: block !important;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Responsive: Mobile View (below 1200px) */
+@media (max-width: 1199.98px) {
+  .desktop-logo {
+    display: none !important;
+  }
+
+  .mobile-logo {
+    display: block !important;
+    max-height: 70px;
+    width: auto;
+    object-fit: contain;
+    padding: 5px 0;
+  }
+
+  .navbar-logo-wrapper {
+    height: 60px;
+    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+  }
+
+  #nav.navbar {
+    height: auto;
+  }
+
+  .navbar-toggler {
+    z-index: 1001;
+    margin-right: 10px;
+  }
+
+  #navbarNav.show .nav-item,
+  #navbarNav.collapsing .nav-item {
+    margin: 5px 0;
+  }
+
+  #navbarNav.show .nav-link,
+  #navbarNav.collapsing .nav-link {
+    padding: 10px 15px;
+    display: flex !important;
+    align-items: center;
+  }
+}
+
+/* Responsive: Medium Screens (1200px to 1399px) */
+@media (min-width: 1200px) and (max-width: 1399px) {
+  .desktop-logo {
+    display: block;
+    margin-left: 10px;
+    max-height: 120px;
+  }
+
+  /* .navbar-logo-wrapper {
+    height: 80px;
+    margin-bottom: -30px;
+  } */
+
+  .navbar-logo-wrapper {
+    height: 80px;
+    margin-bottom: -25px;
+  }
+
+  #nav.navbar {
+    height: auto;
+  }
+
+  /* .navbar .nav-link {
+    font-size: 15px;
+    padding: 18px;
+  } */
+
+  .navbar .nav-link {
+    font-size: 15px;
+    padding: 18px 18px;
+  }
+
+  /* .navbar .nav-link-2 {
+    font-size: 15px;
+    padding: 28px;
+  } */
+}
+
+/* @media (min-width: 1001px) and (max-width: 1170px) {
+  .navbar .nav-link {
+    font-size: 15px;
+    padding: 17px 10px;
+  }
+
+  .navbar-logo {
+    margin-left: 5px;
+  }
+} */
+
+/* Responsive: Large Screens (1400px and up) */
+@media (min-width: 1400px) {
+  .image {
+    margin-left: 30px;
+  }
+
+  #nav.navbar {
+    height: auto;
+  }
+
+  /* .navbar-logo-wrapper {
+    height: 100px;
+    margin-bottom: -40px;
+  } */
+
+  .navbar-logo-wrapper {
+    height: 100px;
+    margin-bottom: -30px;
+  }
+
+  .navbar-logo {
+    margin-left: 20px;
+    max-height: 130px;
+  }
+
+  /* .navbar .nav-link {
+    font-size: 17px;
+    padding: 26px;
+  } */
+
+  .navbar .nav-link {
+    font-size: 16px;
+    padding: 23px 23px;
+  }
+
+  .navbar .nav-item.dropdown .dropdown-menu {
+    width: 100%;
+    background-color: #1a1a1a; /* Dark background */
+    border: none; /* Remove the border */
+    box-shadow: none; /* Remove shadow */
+  }
+  
+  /* Hover effect for dropdown items */
+  .navbar .nav-item.dropdown .dropdown-menu .dropdown-item:hover,
+  .navbar .nav-item.dropdown .dropdown-menu .dropdown-item:focus {
+    transition: all 0.2s ease-in-out;
+    background-color: #3e3e3e; /* Same as navbar hover */
+    color: #fff; /* Light text color on hover */
+    border-radius: 4px; /* Rounded corners */
+  }
+  
+  /* Dropdown menu styling */
+  .navbar .dropdown-menu {
+    background-color: rgb(0, 0, 0); /* Dark background to match navbar */
+    border: none;
+  }
+  
+  .navbar .dropdown-item {
+    color: #fff;
+    /* Add padding and hover effect */
+    padding: 10px 15px;
+  }
+  
+  .navbar .dropdown-item:hover {
+    background-color: #3e3e3e;
+    /* Border-radius for consistency */
+    border-radius: 4px;
+  }
+}
+
+/* @media (max-width: 350px) {
+  .container-fluid {
+    height: 40px;
+    padding: 0;
+  }
+
+  .navbar-logo {
+    max-height: 95%;
+  }
+
+  .navbar-logo-wrapper {
+    padding: 0;
+    height: 41px;
+  }
+
+  .mobile-logo {
+    padding: 0;
+  }
+
+  .navbar-collapse,
+  .collapse,
+  #navbarNav {
+    background-color: black;
+    width: 100%;
+    position: static !important;
+    transition: all 0.3s ease-in-out;
+    z-index: 5000;
+  }
+
+  .navbar-collapse.show {
+    display: block !important;
+    transition: all 0.3s ease-in-out;
+  }
+} */
+
+/* Responsive for very small screens (below 350px) */
+/* @media (max-width: 350px) {
+  #nav.navbar {
+    height: 40px !important; 
+    padding: 0; 
+  }
+
+  .navbar-logo-wrapper {
+    height: 40px; 
+    padding: 0;
+  }
+
+  .navbar-logo {
+    max-height: 80%; 
+    object-fit: contain;
+  }
+
+  .navbar-toggler {
+    font-size: 18px; 
+    padding: 5px; 
+  }
+
+  .navbar .nav-link {
+    font-size: 12px; 
+    padding: 5px 10px; 
+  }
+
+  .navbar .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    width: 100%; 
+  }
+
+  .navbar .dropdown-item {
+    padding: 8px 12px; 
+    font-size: 12px; 
+  }
+
+  .navbar .dropdown-item:hover {
+    background-color: #3e3e3e;
+    border-radius: 4px;
+  }
+} */
+
+/* Dropdown background should match navbar */
+.navbar .nav-item.dropdown .dropdown-menu {
+  width: 100%;
+  background-color: #1a1a1a; /* Dark background */
+  border: none; /* Remove the border */
+  box-shadow: none; /* Remove shadow */
+}
+
+/* Hover effect for dropdown items */
+.navbar .nav-item.dropdown .dropdown-menu .dropdown-item:hover,
+.navbar .nav-item.dropdown .dropdown-menu .dropdown-item:focus {
+  transition: all 0.2s ease-in-out;
+  background-color: #3e3e3e; /* Same as navbar hover */
+  color: #fff; /* Light text color on hover */
+  border-radius: 4px; /* Rounded corners */
+}
+
+/* Dropdown menu styling */
+.navbar .dropdown-menu {
+  background-color: rgb(0, 0, 0); /* Dark background to match navbar */
+  border: none;
+}
+
+.navbar .dropdown-item {
+  color: #fff;
+  /* Add padding and hover effect */
+  padding: 10px 15px;
+}
+
+.navbar .dropdown-item:hover {
+  background-color: #3e3e3e;
+  /* Border-radius for consistency */
+  border-radius: 4px;
+}
+
+/* For small screens (below 768px), ensure dropdown menu works correctly */
+@media (max-width: 768px) {
+  .navbar .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+  }
+}

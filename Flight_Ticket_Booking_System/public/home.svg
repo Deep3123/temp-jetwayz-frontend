@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 150">
+  <!-- Clean white background -->
+  <rect width="500" height="150" fill="white"/>
+  
+  <!-- Simple, modern plane symbol - moved higher -->
+  <g transform="translate(60, 50)">
+    <path d="M85,0 C82,0 80,1 78,3 L35,25 H5 C2,25 0,27 0,30 C0,33 2,35 5,35 H25 L15,42 H5 C2,42 0,44 0,47 C0,50 2,52 5,52 H15 L30,45 L65,30 L90,15 C95,12 100,7 100,2 C100,-3 90,0 85,0 Z" fill="#0053b3"/>
+    <path d="M0,30 H25 M0,47 H15" stroke="#0053b3" stroke-width="2" fill="none" stroke-linecap="round"/>
+  </g>
+  
+  <!-- Company name in clean, professional font -->
+  <text x="200" y="80" font-family="Arial, sans-serif" font-size="50" font-weight="700" text-anchor="start" fill="#0053b3">JetWayz</text>
+  
+  <!-- Tagline -->
+  <text x="202" y="105" font-family="Arial, sans-serif" font-size="14" font-weight="400" text-anchor="start" fill="#666666">Flight Booking System</text>
+  
+  <!-- Simple underline accent -->
+  <path d="M200,85 L380,85" stroke="#ff6b00" stroke-width="3" fill="none"/>
+</svg>

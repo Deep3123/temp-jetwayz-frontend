@@ -1,0 +1,450 @@
+/* Reset and box-sizing */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body and general layout */
+body {
+  /* font-family: Arial, sans-serif; */
+  background-color: #f9f9f9;
+}
+
+section.vh-100 {
+  margin-top: 50px;
+  margin-bottom: 200px;
+}
+
+/* Container for login form */
+.login-container {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+}
+
+/* Header styles */
+.login-header {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.login-header h2 {
+  color: #0053b3;
+  font-size: 24px;
+  margin-bottom: 5px;
+}
+
+.login-header p {
+  color: #666;
+  font-size: 14px;
+}
+
+.orange-accent {
+  height: 3px;
+  background-color: #ff6b00;
+  width: 40%;
+  margin: 0 auto 20px;
+  border-radius: 2px;
+}
+
+/* Form group styling */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #555;
+  font-size: 14px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+  transition: border-color 0.3s;
+}
+
+.form-control:focus {
+  border-color: #0053b3;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(0, 83, 179, 0.2);
+}
+
+/* Error messages */
+.error-message {
+  color: #dc3545;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.error {
+  color: red;
+  font-size: 0.875rem;
+  border-radius: 5px;
+  margin-top: 5px;
+  padding-left: 5px;
+  background-color: rgb(253, 226, 226);
+}
+
+/* Login button styles */
+.login-button {
+  width: 100%;
+  background-color: #0053b3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 14px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-bottom: 20px;
+}
+
+.login-button:hover:not([disabled]) {
+  background-color: #003d84;
+}
+
+.login-button[disabled] {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+/* Forgot password link */
+.forgot-link {
+  color: #0053b3;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.forgot-link:hover {
+  text-decoration: underline;
+}
+
+/* Signup link */
+.signup-link {
+  text-align: center;
+  font-size: 14px;
+  color: #666;
+}
+
+.signup-link a {
+  color: #0053b3;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.signup-link a:hover {
+  text-decoration: underline;
+}
+
+/* Remember me checkbox */
+.remember-me {
+  display: flex;
+  align-items: center;
+}
+
+.remember-me label {
+  margin-bottom: 0;
+  margin-left: 5px;
+}
+
+/* Responsive styles */
+@media (max-width: 991px) {
+  section.vh-100 {
+    margin-bottom: 500px;
+  }
+  /* Adjustments for medium-sized screens like tablets */
+  .container-fluid {
+    padding-bottom: 40px;
+  }
+  .login-container {
+    padding: 20px;
+  }
+
+  .img-fluid {
+    margin-top: 30px;
+    max-height: 300px; /* Adjust image height for medium-sized screens */
+  }
+}
+
+@media (max-width: 560px) {
+  section.vh-100 {
+    margin-bottom: 400px;
+  }
+
+  /* Adjustments for smaller screens like mobile */
+  .container-fluid {
+    padding-bottom: 50px;
+  }
+
+  .login-container {
+    padding: 20px;
+  }
+
+  .img-fluid {
+    margin-top: 20px;
+    max-height: 200px; /* Adjust image height for smaller screens */
+  }
+  /* Adjust the form's bottom margin to prevent overlap */
+  /* form {
+      margin-bottom: 100px;
+    } */
+}
+
+@media (max-width: 450px) {
+  /* Adjustments for very small screens */
+  .container-fluid {
+    padding-bottom: 40px;
+  }
+
+  .login-container {
+    padding: 15px;
+  }
+
+  .img-fluid {
+    margin-top: 20px;
+    max-height: 200px; /* Adjust image height for smaller screens */
+  }
+
+  /* More margin for the form on very small screens */
+  /* form {
+      margin-bottom: 120px;
+    } */
+
+  section.vh-100 {
+    margin-bottom: 400px;
+  }
+}
+
+/* Divider styling */
+.divider:after,
+.divider:before {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #eee;
+}
+
+/* Custom height class */
+.h-custom {
+  height: calc(100% - 73px);
+}
+
+/* Password toggle feature */
+.password-input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.password-toggle-icon {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #555;
+}
+
+.password-toggle-icon:hover {
+  color: #0053b3;
+}
+
+.captcha-image-box {
+  display: flex;
+  align-items: center;
+  /* background-color: #f9f9f9;  */
+  padding: 10px;
+  /* border-radius: 8px; */
+  /* border: 1px solid #ddd; */
+  margin-bottom: 10px;
+  max-width: 280px;
+}
+
+.captcha-image {
+  height: 60px;
+  width: auto;
+  object-fit: contain;
+  border: 1px solid #ccc;
+  background-color: #fff; /* solid background for clarity */
+  padding: 4px;
+  border-radius: 4px;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+}
+
+.refresh-captcha {
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  padding: 8px 10px;
+  font-size: 18px;
+  margin-left: 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.refresh-captcha:hover {
+  background-color: #f0f0f0;
+}
+
+.spinner-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.8); /* Black with transparency */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1050;
+}
+
+.animated-dots .dots::after {
+  content: "";
+  display: inline-block;
+  animation: dotsAnim 1.5s infinite;
+}
+
+@keyframes dotsAnim {
+  0% {
+    content: ".";
+  }
+  25% {
+    content: "..";
+  }
+  50% {
+    content: "...";
+  }
+  75% {
+    content: "..";
+  }
+  100% {
+    content: ".";
+  }
+}
+
+/* CAPTCHA Loading animation */
+.captcha-loading {
+  height: 60px;
+  width: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  padding: 4px;
+  border-radius: 4px;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+}
+
+.loading-text {
+  color: #555;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.loading-text .loading-dots::after {
+  content: "";
+  display: inline-block;
+  animation: captchaDotsAnim 1.5s infinite;
+}
+
+@keyframes captchaDotsAnim {
+  0% {
+    content: ".";
+  }
+  25% {
+    content: "..";
+  }
+  50% {
+    content: "...";
+  }
+  75% {
+    content: "....";
+  }
+  100% {
+    content: ".";
+  }
+}
+
+/* Add these styles to your login.component.css file */
+
+/* Divider styling for "OR" separator */
+.divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #999;
+  font-size: 14px;
+  margin: 25px 0;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  flex: 1;
+  border-bottom: 1px solid #ddd;
+}
+
+.divider::before {
+  margin-right: 10px;
+}
+
+.divider::after {
+  margin-left: 10px;
+}
+
+/* Google button styling */
+.social-login-buttons {
+  margin-top: 15px;
+}
+
+.google-btn {
+  background-color: #ffffff;
+  color: #757575;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.google-btn:hover {
+  background-color: #f8f8f8;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+}
+
+.google-btn:active {
+  background-color: #f1f1f1;
+}
+
+.google-btn img {
+  margin-right: 8px;
+}
+
+/* OAuth Profile Completion Page specific styles */
+/* Add these to your oauth-profile-completion.component.css file */
+
+.login-container {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .login-container {
+    margin: 0 15px;
+  }
+}

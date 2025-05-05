@@ -1,0 +1,657 @@
+/* .container {
+  margin-top: 30px;
+} */
+
+/* .home-img { */
+/* margin-bottom: 20px; */
+/* } */
+
+/* .about .about-meta {
+  color: var(--accent-color);
+  font-weight: 600;
+  margin-bottom: 1rem;
+  display: inline-block;
+}
+
+.about .about-title {
+  font-size: 1.75rem;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+  font-weight: 700;
+}
+
+@media (max-width: 992px) {
+  .about .about-title {
+    font-size: 2rem;
+  }
+}
+
+.about .about-description {
+  margin-bottom: 2rem;
+  color: color-mix(in srgb, var(--default-color), transparent 20%);
+}
+
+.about .feature-list-wrapper {
+  margin-bottom: 2rem;
+}
+
+.about .feature-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.about .feature-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+}
+
+.about .feature-list li i {
+  color: var(--accent-color);
+  font-size: 1.25rem;
+}
+
+.about .profile .profile-image {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.about .profile .profile-name {
+  font-size: 1.125rem;
+  margin: 0;
+}
+
+.about .profile .profile-position {
+  color: var(--accent-color);
+  margin: 0;
+  font-size: 0.875rem;
+}
+
+.about .contact-info {
+  padding: 1rem 1.5rem;
+  background-color: var(--surface-color);
+  border-radius: 0.5rem;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.06);
+}
+
+.about .contact-info i {
+  color: var(--accent-color);
+  font-size: 1.5rem;
+}
+
+.about .contact-info .contact-label {
+  color: color-mix(in srgb, var(--default-color), transparent 30%);
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+.about .contact-info .contact-number {
+  font-weight: 600;
+  margin: 0;
+}
+
+.about .image-wrapper {
+  position: relative;
+}
+
+@media (max-width: 992px) {
+  .about .image-wrapper {
+    padding-left: 0;
+    margin-top: 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .about .image-wrapper .images {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .about .image-wrapper .main-image {
+    margin-left: 0;
+  }
+}
+
+.about .image-wrapper .small-image {
+  position: absolute;
+  top: 20%;
+  left: -10%;
+  width: 45%;
+  border: 8px solid var(--surface-color);
+}
+
+@media (max-width: 992px) {
+  .about .image-wrapper .small-image {
+    position: static;
+    width: 100%;
+    margin: 0 auto;
+    border: 0;
+  }
+}
+
+.about .image-wrapper .experience-badge {
+  position: absolute;
+  bottom: 5%;
+  right: 5%;
+  background-color: var(--accent-color);
+  color: var(--contrast-color);
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  text-align: center;
+  min-width: 200px;
+  animation: experience-float 3s ease-in-out infinite;
+}
+
+@media (max-width: 992px) {
+  .about .image-wrapper .experience-badge {
+    position: static;
+    width: fit-content;
+    margin: 0 auto;
+  }
+}
+
+.about .image-wrapper .experience-badge h3 {
+  color: var(--contrast-color);
+  font-size: 2.5rem;
+  margin: 0;
+  line-height: 0.5;
+}
+
+.about .image-wrapper .experience-badge h3 span {
+  font-size: 1rem;
+  display: inline-block;
+  margin-left: 0.25rem;
+}
+
+.about .image-wrapper .experience-badge p {
+  margin: 0.5rem 0 0;
+  font-size: 0.875rem;
+}
+
+@keyframes experience-float {
+  0% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+/* Animation keyframes */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Animation classes */
+.animated {
+  animation-duration: 1.2s;
+  animation-fill-mode: both;
+}
+
+.fadeIn {
+  animation-name: fadeIn;
+}
+
+.fadeInUp {
+  animation-name: fadeInUp;
+}
+
+/* Optional: Add delay to buttons or key elements */
+.animated.fadeInUp {
+  animation-delay: 0.5s;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Arial", sans-serif;
+  background-color: #f8f9fa;
+  color: #333;
+}
+
+.flight-banner {
+  /* margin-bottom: 20px; */
+  position: relative;
+  width: 100%;
+  height: 120px;
+  background-color: #f8f9fa;
+  overflow: hidden;
+  /* box-shadow: 0 2px 10px rgba(0, 0, 0, 0.18);
+  border-top: 1px solid #e7e7e7;
+  border-bottom: 1px solid #e7e7e7; */
+}
+
+.flight-path {
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    #e0e0e0 20%,
+    #e0e0e0 80%,
+    transparent
+  );
+}
+
+.route-markers {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  height: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.destination {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.destination-dot {
+  width: 4px;
+  height: 4px;
+  background-color: #1a73e8;
+  border-radius: 50%;
+  margin-bottom: 6px;
+}
+
+.destination-label {
+  font-size: 11px;
+  color: #5f6368;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+}
+
+.airplane-container {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  animation: flyAcross 15s linear infinite;
+  z-index: 10;
+}
+
+.airplane {
+  display: flex;
+  align-items: center;
+  transform: scale(0.75); /* Increased from 0.6 to 0.75 */
+}
+
+/* Horizontal airplane design - adjusted size */
+.plane-body {
+  width: 60px; /* Increased from 50px */
+  height: 16px; /* Increased from 14px */
+  background: linear-gradient(to right, #1a73e8, #4285f4);
+  border-radius: 16px;
+  position: relative;
+}
+
+.plane-nose {
+  position: absolute;
+  right: -9px;
+  top: 0;
+  width: 0;
+  height: 0;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  border-left: 12px solid #4285f4;
+}
+
+.plane-tail {
+  position: absolute;
+  left: -4px;
+  top: -4px;
+  width: 9px;
+  height: 24px;
+  background-color: #1a73e8;
+  border-radius: 2px 0 0 2px;
+}
+
+.plane-wing-top {
+  position: absolute;
+  left: 22px;
+  top: -12px;
+  width: 25px;
+  height: 12px;
+  background-color: #4285f4;
+  border-radius: 3px 3px 0 0;
+}
+
+.plane-wing-bottom {
+  position: absolute;
+  left: 22px;
+  bottom: -12px;
+  width: 25px;
+  height: 12px;
+  background-color: #4285f4;
+  border-radius: 0 0 3px 3px;
+}
+
+.window {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background-color: #e8f0fe;
+  border-radius: 50%;
+  top: 6px;
+}
+
+.window-1 {
+  left: 12px;
+}
+.window-2 {
+  left: 24px;
+}
+.window-3 {
+  left: 36px;
+}
+.window-4 {
+  left: 48px;
+}
+
+.trail {
+  position: absolute;
+  left: -50px;
+  top: 50%;
+  width: 50px;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    rgba(26, 115, 232, 0),
+    rgba(26, 115, 232, 0.4)
+  );
+}
+
+@keyframes flyAcross {
+  0% {
+    left: -100px;
+  }
+  100% {
+    left: calc(100% + 100px);
+  }
+}
+
+.airplane-container:nth-child(2) {
+  animation-delay: -5s;
+}
+
+.airplane-container:nth-child(3) {
+  animation-delay: -10s;
+}
+
+.overlay-gradient-left {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 60px;
+  background: linear-gradient(to right, #ffffff, rgba(255, 255, 255, 0));
+  z-index: 2;
+}
+
+.overlay-gradient-right {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 60px;
+  background: linear-gradient(to left, #ffffff, rgba(255, 255, 255, 0));
+  z-index: 2;
+}
+
+.flight-info-popup {
+  position: absolute;
+  top: -35px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
+  padding: 3px 6px;
+  font-size: 10px;
+  color: #5f6368;
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.airplane-container:hover .flight-info-popup {
+  opacity: 1;
+}
+
+/* .fade-in {
+  animation: fadeIn 2s ease-in-out;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.flight-banner {
+  position: relative;
+  height: 200px;
+  background: linear-gradient(to right, #e0f7fa, #ffffff);
+  overflow: hidden;
+}
+
+.plane {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  animation: fly 10s linear infinite;
+}
+
+.plane img {
+  height: 60px;
+}
+
+@keyframes fly {
+  0% {
+    left: -100px;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+.cloud {
+  position: absolute;
+  width: 100px;
+  height: 60px;
+  background: #fff;
+  border-radius: 50%;
+  top: 20%;
+  left: -100px;
+  animation: cloudMove 20s linear infinite;
+}
+
+@keyframes cloudMove {
+  0% {
+    left: -100px;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+.airport-names {
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.airport-names span {
+  margin: 0 15px;
+} */
+
+/* .container-2 {
+  justify-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  margin: 0 auto;
+}
+
+.animation {
+  flex-shrink: 0;
+  width: 350px;
+  height: 350px;
+  margin-right: 30px; 
+}
+
+.text-container {
+  flex: 1;
+  min-width: 400px;
+}
+
+.text-container svg {
+  width: 100%; 
+  height: auto; 
+}
+
+
+
+@media (max-width: 850px) {
+  .container-2 {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .animation {
+
+    height: 200px;
+    width: 200px;
+  }
+
+  .text-container {
+    min-width: 300px;
+  }
+} */
+
+.logo-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* min-height: 100vh; */
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.logo-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  /* max-width: 1200px; */
+  /* padding: 20px; */
+}
+
+.animation {
+  flex-shrink: 0;
+  width: 350px;
+  height: 350px;
+  margin-right: 30px; /* Space between animation and text */
+}
+
+.text-container {
+  flex: 1;
+  min-width: 400px;
+}
+
+.text-container svg {
+  width: 100%; /* Ensure the SVG takes up the available width */
+  height: auto; /* Maintain aspect ratio */
+}
+
+/* Make sure the container is responsive */
+@media (max-width: 850px) {
+  .logo-content {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .animation {
+    height: 200px;
+    width: 200px;
+    margin-right: 0;
+    margin-bottom: 20px;
+  }
+
+  .text-container {
+    min-width: 300px;
+  }
+}
+
+@media (max-width: 991px) {
+  /* .text-container {
+    margin-left: 95px;
+    min-width: 300px;
+  } */
+
+  .row .col-md-6 h3 {
+    /* Your styles here */
+    font-size: 25px;
+  }
+
+  .row .col-md-6 p {
+    /* Your styles here */
+    font-size: 18px;
+  }
+}
+
+/* @media (max-width: 500px) {
+  .text-container {
+    margin-left: 75px;
+    min-width: 300px;
+  }
+} */

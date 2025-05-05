@@ -1,0 +1,432 @@
+/* Gradient background */
+body {
+  background: -webkit-linear-gradient(left, #0072ff, #00c6ff);
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+/* Main contact form container */
+.contact-form {
+  background: #fff;
+  padding: 3rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 10px rgba(0.1, 0.1, 0.1, 0.2);
+  width: 100%;
+  max-width: 900px;
+  margin-bottom: 80px;
+}
+
+.contact-form .row {
+  display: flex; /* Flexbox to control layout */
+  flex-wrap: wrap; /* Ensure elements wrap when needed */
+  justify-content: space-between; /* Maintain space between elements */
+}
+
+/* Central message styling */
+.central-message {
+  text-align: center;
+  margin: 10% auto;
+}
+
+.central-message h4 {
+  font-size: 2.5rem; /* Increased font size */
+  font-weight: 500;
+  font-family: "Arial", sans-serif;
+  letter-spacing: 0.5px;
+  margin-top: 0;
+  display: block;
+}
+
+/* Styling for each part of the central message */
+.central-message .part1 {
+  font-size: 2.8rem; /* Largest font size */
+  color: #dda853; /* Tomato color */
+  font-weight: 600;
+  display: inline-block;
+}
+
+.central-message .part2 {
+  font-size: 3rem; /* Larger font size */
+  color: #183b4e; /* Lime green color */
+  font-weight: 700;
+  display: inline-block;
+  margin-left: 10px; /* Add space between parts */
+}
+
+.central-message .part3 {
+  font-size: 2.2rem; /* Slightly smaller font size */
+  color: #7d858f; /* Gold color */
+  font-weight: 500;
+  display: inline-block;
+  margin-left: 10px; /* Add space between parts */
+}
+
+/* Contact image styling */
+.contact-image {
+  text-align: center;
+}
+
+.contact-image img {
+  border-radius: 50%;
+  width: 10rem;
+  margin-top: -5rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transform: rotate(29deg);
+  transition: width 0.3s ease-in-out;
+}
+
+/* Form styling */
+.contact-form form {
+  padding: 2rem 0;
+}
+
+.contact-form h3 {
+  margin-bottom: 1.5rem;
+  color: #0062cc;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+/* Form input fields */
+.contact-form .form-control {
+  border-radius: 1rem;
+  border: 1px solid #ddd;
+  box-shadow: none;
+  font-size: 1rem;
+  padding: 1.2rem;
+  margin-bottom: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.contact-form .form-control:focus {
+  border-color: #0062cc;
+  box-shadow: 0 0 10px rgba(0, 98, 204, 0.4);
+}
+
+/* Submit button */
+.contact-form .btnContact {
+  width: 30%; /* Default size on larger screens */
+  border: none;
+  border-radius: 1rem;
+  padding: 0.8rem;
+  background: #0d6efd;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+}
+
+.contact-form .btnContact:hover {
+  background-color: #1355b8;
+  transform: translateY(-2px);
+}
+
+/* Responsive design for small screens */
+@media (max-width: 920px) {
+  /* Adjust the form layout */
+  .central-message .part1 {
+    font-size: 2.3rem;
+  }
+
+  .central-message .part2 {
+    font-size: 2.6rem;
+  }
+
+  .central-message .part3 {
+    font-size: 1.7rem;
+  }
+
+  .contact-form {
+    padding: 2rem;
+    margin-top: 12%;
+    width: 95%; /* Ensure the form takes up most of the screen width */
+  }
+
+  /* Reduce the image size on smaller screens */
+  .contact-image img {
+    width: 8rem; /* Smaller image size */
+    margin-top: -3rem; /* Adjust vertical position */
+  }
+
+  /* Adjust heading size */
+  .contact-form h3 {
+    font-size: 1.8rem;
+  }
+
+  /* Stack form fields vertically */
+  .contact-form .row {
+    flex-direction: column; /* Stack input fields vertically */
+  }
+
+  .contact-form .col-md-6 {
+    width: 100%; /* Full width for each column */
+    margin-bottom: 1rem;
+  }
+
+  .contact-form .form-control {
+    padding: 1rem;
+  }
+
+  .contact-form .btnContact {
+    padding: 1.2rem;
+    font-size: 1.1rem;
+  }
+
+  /* Fixing the positioning of the textarea */
+  .contact-form .form-group textarea {
+    height: 150px; /* Keep the height of textarea */
+  }
+
+  .contact-form .form-group textarea + .form-group {
+    margin-top: 1rem; /* Add space between textarea and the submit button */
+  }
+
+  /* Fix for the order of elements on small screens */
+  .contact-form .form-group textarea {
+    order: 1; /* Ensure textarea stays above submit button */
+  }
+
+  .contact-form .form-group input[type="submit"] {
+    order: -1; /* Ensure submit button stays below textarea */
+  }
+
+  .contact-form .btnContact {
+    width: 30%; /* Adjust button width for medium screens */
+    padding: 1rem;
+    font-size: 1.1rem;
+  }
+}
+
+/* Responsive design for small screens */
+@media (max-width: 768px) {
+  /* Adjust the form layout */
+  .central-message .part1 {
+    font-size: 2.3rem;
+  }
+
+  .central-message .part2 {
+    font-size: 2.6rem;
+  }
+
+  .central-message .part3 {
+    font-size: 1.7rem;
+  }
+
+  .contact-form {
+    padding: 2rem;
+    margin-top: 12%;
+    width: 90%; /* Ensure the form takes up most of the screen width */
+  }
+
+  /* Reduce the image size on smaller screens */
+  .contact-image img {
+    width: 8rem; /* Smaller image size */
+    margin-top: -3rem; /* Adjust vertical position */
+  }
+
+  /* Adjust heading size */
+  .contact-form h3 {
+    font-size: 1.8rem;
+  }
+
+  /* Stack form fields vertically */
+  .contact-form .row {
+    flex-direction: column; /* Stack input fields vertically */
+  }
+
+  .contact-form .col-md-6 {
+    width: 100%; /* Full width for each column */
+    margin-bottom: 1rem;
+  }
+
+  .contact-form .form-control {
+    padding: 1rem;
+  }
+
+  .contact-form .btnContact {
+    padding: 1.2rem;
+    font-size: 1.1rem;
+  }
+
+  /* Fixing the positioning of the textarea */
+  .contact-form .form-group textarea {
+    height: 150px; /* Keep the height of textarea */
+  }
+
+  .contact-form .form-group textarea + .form-group {
+    margin-top: 1rem; /* Add space between textarea and the submit button */
+  }
+
+  /* Fix for the order of elements on small screens */
+  .contact-form .form-group textarea {
+    order: 1; /* Ensure textarea stays above submit button */
+  }
+
+  .contact-form .form-group input[type="submit"] {
+    order: -1; /* Ensure submit button stays below textarea */
+  }
+
+  .contact-form .btnContact {
+    width: 30%; /* Full width button for small screens */
+    padding: 1rem;
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 680px) {
+  .contact-form .btnContact {
+    width: 33%;
+    padding: 1rem;
+    font-size: 1rem; /* Slightly smaller font for very small screens */
+  }
+}
+
+@media (max-width: 590px) {
+  .contact-form .btnContact {
+    width: 35%;
+    padding: 0.95rem;
+    font-size: 0.95rem; /* Slightly smaller font for very small screens */
+  }
+}
+
+/* Further adjustments for very small screens (max-width: 480px) */
+@media (max-width: 490px) {
+  .central-message .part1 {
+    font-size: 2.1rem;
+  }
+
+  .central-message .part2 {
+    font-size: 2.4rem;
+  }
+
+  .central-message .part3 {
+    font-size: 1.4rem;
+  }
+
+  .contact-form {
+    padding: 1.5rem;
+    margin-top: 18%;
+  }
+
+  .contact-image img {
+    width: 6rem; /* Even smaller image for very small screens */
+  }
+
+  .contact-form h3 {
+    font-size: 1.6rem; /* Slightly smaller heading */
+  }
+
+  .contact-form .form-control {
+    font-size: 0.9rem; /* Reduce input field text size */
+  }
+
+  .contact-form .btnContact {
+    font-size: 1rem; /* Slightly smaller button font */
+  }
+
+  /* Ensure 'Your Message' stays above submit button */
+  .contact-form .row {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .contact-form .col-md-6 {
+    width: 100%;
+  }
+
+  /* Adjust textarea size for very small screens */
+  .contact-form .form-group textarea {
+    height: 120px; /* Adjust height for smaller screens */
+  }
+
+  /* Fixing the order of elements */
+  .contact-form .form-group textarea {
+    order: 1; /* Ensure textarea stays above submit button */
+  }
+
+  .contact-form .form-group input[type="submit"] {
+    order: 2; /* Ensure submit button stays below textarea */
+  }
+
+  .contact-form .btnContact {
+    width: 40%;
+    padding: 0.95rem;
+    font-size: 0.95rem; /* Slightly smaller font for very small screens */
+  }
+}
+
+@media (max-width: 400px) {
+  .contact-form .btnContact {
+    width: 50%;
+    padding: 0.85rem;
+    font-size: 0.85rem; /* Slightly smaller font for very small screens */
+  }
+}
+
+@media (max-width: 310px) {
+  .contact-form .btnContact {
+    width: 70%;
+    padding: 0.8rem;
+    font-size: 0.75rem; /* Slightly smaller font for very small screens */
+  }
+}
+
+@media (max-width: 240px) {
+  .contact-form .btnContact {
+    width: 100%;
+    padding: 0.7rem;
+    font-size: 0.65rem; /* Slightly smaller font for very small screens */
+  }
+}
+
+@media (max-width: 165px) {
+  .contact-form .btnContact {
+    width: 100%;
+    padding: 0.6rem;
+    font-size: 0.55rem; /* Slightly smaller font for very small screens */
+  }
+}
+
+/* Spinner overlay and animation */
+.spinner-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1050;
+}
+
+.animated-dots .dots::after {
+  content: "";
+  display: inline-block;
+  animation: dotsAnim 1.5s infinite;
+}
+
+@keyframes dotsAnim {
+  0% {
+    content: ".";
+  }
+  25% {
+    content: "..";
+  }
+  50% {
+    content: "...";
+  }
+  75% {
+    content: "..";
+  }
+  100% {
+    content: ".";
+  }
+}

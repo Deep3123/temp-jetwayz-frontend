@@ -1,0 +1,119 @@
+<h2 mat-dialog-title>{{ isEditing ? 'Edit Flight' : 'Add Flight' }}</h2>
+
+<mat-dialog-content>
+    <form #flightForm="ngForm" (ngSubmit)="submitForm(flightForm)">
+
+        <mat-form-field appearance="fill" class="w-100">
+            <mat-label>Flight Number</mat-label>
+            <input matInput type="text" [(ngModel)]="selectedFlight.flightNumber" name="flightNumber" required>
+        </mat-form-field>
+
+        <!-- Departure Date with Calendar -->
+        <mat-form-field appearance="fill" class="w-100">
+            <mat-label>Departure Date</mat-label>
+            <input matInput [matDatepicker]="departurePicker" [min]="minDate" [(ngModel)]="selectedFlight.departureDate"
+                name="departureDate" required (dateInput)="validateDate($event, 'departure')">
+            <mat-datepicker-toggle matIconSuffix [for]="departurePicker"></mat-datepicker-toggle>
+            <mat-datepicker #departurePicker></mat-datepicker>
+        </mat-form-field>
+
+        <!-- Departure Time -->
+        <mat-form-field appearance="fill" class="w-100">
+            <mat-label>Departure Time</mat-label>
+            <input matInput [ngxTimepicker]="departureTimePicker" [(ngModel)]="selectedFlight.departureTime"
+                name="departureTime" (timeSet)="calculateDuration()" required />
+            <ngx-material-timepicker-toggle [for]="departureTimePicker"></ngx-material-timepicker-toggle>
+            <ngx-material-timepicker #departureTimePicker [format]="12"
+                [appendToInput]="false"></ngx-material-timepicker>
+        </mat-form-field>
+
+        <!-- Arrival Date with Calendar -->
+        <mat-form-field appearance="fill" class="w-100">
+            <mat-label>Arrival Date</mat-label>
+            <input matInput [matDatepicker]="arrivalPicker" [min]="minDate" [(ngModel)]="selectedFlight.arrivalDate" name="arrivalDate"
+                required>
+            <mat-datepicker-toggle matIconSuffix [for]="arrivalPicker"></mat-datepicker-toggle>
+            <mat-datepicker #arrivalPicker></mat-datepicker>
+        </mat-form-field>
+
+        <!-- Arrival Time -->
+        <mat-form-field appearance="fill" class="w-100">
+            <mat-label>Arrival Time</mat-label>
+            <input matInput [ngxTimepicker]="arrivalTimePicker" [(ngModel)]="selectedFlight.arrivalTime"
+                name="arrivalTime" (timeSet)="calculateDuration()" required (dateInput)="validateDate($event, 'arrival')"/>
+            <ngx-material-timepicker-toggle [for]="arrivalTimePicker"></ngx-material-timepicker-toggle>
+            <ngx-material-timepicker #arrivalTimePicker [format]="12" [appendToInput]="false"></ngx-material-timepicker>
+        </mat-form-field>
+
+        <!-- <mat-form-field appearance="fill" class="w-100">
+            <mat-label>Meeting Time</mat-label>
+            <input matInput type="datetime-local" id="meeting-time" name="meeting-time" required>
+          </mat-form-field> -->
+
+        <mat-form-field appearance="fill" class="w-100">
+            <mat-label>Departure Airport</mat-label>
+            <input matInput type="text" [(ngModel)]="selectedFlight.departureAirport" name="departureAirport" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="w-100">
+            <mat-label>Arrival Airport</mat-label>
+            <input matInput type="text" [(ngModel)]="selectedFlight.arrivalAirport" name="arrivalAirport" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="w-100">
+            <mat-label>Price</mat-label>
+            <input matInput type="number" [(ngModel)]="selectedFlight.price" name="price" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="w-100">
+            <mat-label>Seats Available</mat-label>
+            <input matInput type="number" [(ngModel)]="selectedFlight.seatsAvailable" name="seatsAvailable" required>
+        </mat-form-field>
+
+        <!-- Duration (Auto-Calculated) -->
+        <mat-form-field appearance="fill" class="w-100">
+            <mat-label>Duration (Minutes)</mat-label>
+            <input matInput type="number" [(ngModel)]="selectedFlight.durationMinutes" name="durationMinutes">
+        </mat-form-field>
+
+        <!-- <mat-form-field appearance="fill" class="w-100">
+            <mat-label>Airline Name</mat-label>
+            <input matInput type="text" [(ngModel)]="selectedFlight.airlineName" name="airlineName" required>
+        </mat-form-field> -->
+
+        <mat-form-field appearance="fill" class="w-100">
+            <mat-label>Flight Class</mat-label>
+            <mat-select [(ngModel)]="selectedFlight.flightClass" name="flightClass" required>
+                <mat-option *ngFor="let class of flightClasses" [value]="class">{{ class }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <!-- Created At (Read-Only) -->
+        <!-- <mat-form-field appearance="fill" class="w-100">
+            <mat-label>Created At</mat-label>
+            <input matInput type="datetime-local" [(ngModel)]="selectedFlight.createdAt" name="createdAt" readonly>
+        </mat-form-field> -->
+
+        <!-- Updated At (Read-Only) -->
+        <!-- <mat-form-field appearance="fill" class="w-100">
+            <mat-label>Updated At</mat-label>
+            <input matInput type="datetime-local" [(ngModel)]="selectedFlight.updatedAt" name="updatedAt" readonly>
+        </mat-form-field> -->
+
+        <mat-dialog-actions>
+            <button mat-button (click)="onNoClick()">Cancel</button>
+            <button class="btn btn-primary text-light" type="submit">
+                {{ isEditing ? 'Update' : 'Add' }} Flight
+            </button>
+        </mat-dialog-actions>
+    </form>
+</mat-dialog-content>
+
+<div *ngIf="isLoading" class="spinner-overlay">
+    <div class="text-center">
+        <div class="spinner-border text-light mb-3" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+        <div class="text-light fs-4 animated-dots">Loading<span class="dots">.</span></div>
+    </div>
+</div>

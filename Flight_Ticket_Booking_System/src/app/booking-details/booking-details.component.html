@@ -1,0 +1,296 @@
+<!-- Place this at the top of your component template -->
+<!-- <div class="spinner-overlay" *ngIf="isLoading">
+    <div class="spinner-container">
+        <div class="spinner"></div>
+        <div class="loading-text">Loading<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span></div>
+    </div>
+</div> -->
+
+
+<!-- Add this line at the top of your template -->
+<!-- <app-spinner [isLoading]="isLoading"></app-spinner> -->
+
+<div *ngIf="isLoading" class="spinner-overlay">
+    <div class="text-center">
+        <div class="spinner-border text-light mb-3" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+        <div class="text-light fs-4 animated-dots">Loading<span class="dots">.</span></div>
+    </div>
+</div>
+
+
+<div class="booking-main">
+    <!-- <div class="header-main">
+        <div class="route-header">
+            <div class="route-info">
+                <div class="route-path">
+                    <span class="departure">{{ selectedFlight.departureAirport }}</span>
+                    <span class="route-arrow"><svg xmlns="http://www.w3.org/2000/svg" height="24px"
+                            viewBox="0 -960 960 960" width="24px" fill="#1f1f1f">
+                            <path
+                                d="m397-115-99-184-184-99 71-70 145 25 102-102-317-135 84-86 385 68 124-124q23-23 57-23t57 23q23 23 23 56.5T822-709L697-584l68 384-85 85-136-317-102 102 26 144-71 71Z" />
+                        </svg></span>
+                    <span class="arrival">{{ selectedFlight.arrivalAirport }}</span>
+                </div>
+                <div class="trip-details">
+                    <span>One Way</span> • <span>{{passengerCount}} </span><span
+                        *ngIf="passengerCount==1">passenger</span><span *ngIf="passengerCount>1">passengers</span>
+                    <a class="link" routerLink="/flight-booking">Change search</a>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+    <div class="booking-inner-wrapper">
+        <div class="booking-main-container">
+            <div class="booking-container">
+                <!-- Booking header -->
+                <div class="booking-header">
+                    <h1 class="page-title">Complete your booking</h1>
+                    <p *ngIf="selectedFlight">{{ selectedFlight.departureAirport | titlecase}} to {{
+                        selectedFlight.arrivalAirport | titlecase
+                        }} •
+                        {{ passengerCount }} {{ passengerCount > 1 ? 'passengers' : 'passenger' }} •<span><a
+                                class="link" routerLink="/flight-booking">Change search</a></span></p>
+                </div>
+
+                <!-- Flight details summary -->
+                <!-- <div class="flight-summary" *ngIf="selectedFlight">
+                    <div class="summary-header">
+                        <h2>Flight details</h2>
+                    </div>
+                    <div class="flight-info">
+                        <div class="flight-route">
+                            <div class="departure-details">
+                                <div class="date">{{ selectedFlight.departureDate | date:'EEE dd MMM' }}</div>
+                                <div class="time">{{ selectedFlight.departureTime }}</div>
+                                <div class="airport-name">{{ selectedFlight.departureAirport }}</div>
+                            </div>
+
+                            <div class="flight-duration">
+                                <div class="duration-text">{{ selectedFlight.durationMinutes | formatDuration }}</div>
+                                <div class="route-line">
+                                    <div class="line"></div>
+                                </div>
+                                <div class="flight-number">{{ selectedFlight.flightNumber }}</div>
+                            </div>
+
+                            <div class="arrival-details">
+                                <div class="date">{{ selectedFlight.arrivalDate | date:'EEE dd MMM' }}</div>
+                                <div class="time">{{ selectedFlight.arrivalTime }}</div>
+                                <div class="airport-name">{{ selectedFlight.arrivalAirport }}</div>
+                            </div>
+                        </div>
+
+                        <div class="price-details">
+                            <div class="cabin-class">{{ selectedFlight.flightClass }} class</div>
+                            <div class="price">INR {{ selectedFlight.price * passengerCount }}</div>
+                        </div>
+                    </div>
+                </div> -->
+
+                <div class="summary-header">
+                    <h2>Flight details</h2>
+                </div>
+
+                <div class="flight-results">
+                    <div class="flight-card">
+                        <div class="flight-details">
+                            <div class="times-route">
+                                <div class="departure-details">
+                                    <!-- <div style="font-size: medium;">{{ flight.airlineName }}</div> -->
+                                    <div class="date">{{ selectedFlight.departureDate | date:'EEE dd MMM' }}</div>
+                                    <div class="time">{{ selectedFlight.departureTime | timeFormat }}</div>
+                                    <div class="airport-code">{{ getAirportName(selectedFlight.departureAirport |
+                                        titlecase) }}
+                                    </div>
+                                    <div class="airport-name">{{ selectedFlight.departureAirport | titlecase }}</div>
+                                </div>
+
+                                <div class="flight-duration">
+                                    <div class="duration-text">{{ formatDuration(selectedFlight.durationMinutes) }}
+                                    </div>
+                                    <!-- &#8594; -->
+                                    <!-- &#x1F822; -->
+                                    <div class="route-line">
+                                        <div class=""></div>
+                                    </div>
+                                    <div class="connection-info" *ngIf="selectedFlight.connection">
+                                        Connects in {{ selectedFlight.connection }}
+                                    </div>
+                                </div>
+
+                                <div class="arrival-details">
+                                    <div class="date">{{ selectedFlight.arrivalDate | date:'EEE dd MMM' }}</div>
+                                    <div class="time">{{ selectedFlight.arrivalTime | timeFormat }}</div>
+                                    <div class="airport-code">{{ getAirportName(selectedFlight.arrivalAirport |
+                                        titlecase) }}</div>
+                                    <div class="airport-name">{{ selectedFlight.arrivalAirport | titlecase }}</div>
+                                </div>
+                            </div>
+
+                            <div class="price-column">
+                                <div class="cabin-class">{{ selectedFlight.flightClass }} <span> class</span></div>
+                                <div class="price-display">
+                                    <div>
+                                        <span class="price-label">from </span>
+                                        <span class="currency-type">INR <span class="total-price">{{
+                                                selectedFlight.price
+                                                }}</span></span>
+                                    </div>
+                                </div>
+                                <!-- <button class="select-flight-button" (click)="bookFlight(flight)">
+                                    Select
+                                </button> -->
+                            </div>
+                        </div>
+
+                        <div class="flight-info">
+                            <div class="aircraft-info">
+                                <img class="airline-logo" src="https://c.ekstatic.net/shared/icons/tailfin/ek.svg">
+                                <span>{{ selectedFlight.flightNumber }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Passenger information form with separate cards -->
+                <div class="passenger-form-container">
+                    <div class="form-header">
+                        <h2>Passenger information</h2>
+                        <p>Please enter details for all passengers</p>
+                    </div>
+
+                    <form (ngSubmit)="onSubmit()" #bookingForm="ngForm">
+                        <!-- Separate card for each passenger -->
+                        <div *ngFor="let passenger of passengers; let i = index" class="passenger-card">
+                            <div class="passenger-card-header">
+                                <h3>{{ 'Passenger ' + (i + 1) }}</h3>
+                            </div>
+                            <div class="passenger-card-second-header">* Names and Age must exactly match passport
+                                details and
+                                should be entered using English characters only. They can’t be changed after your
+                                booking is complete</div>
+                            <div class="passenger-card-body">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <!-- <label for="firstName{{i}}">First name *</label> -->
+                                        <input type="text" id="firstName{{i}}" [(ngModel)]="passenger.firstName"
+                                            name="firstName{{i}}" required #firstName="ngModel" class="form-control"
+                                            placeholder="First name *">
+                                        <div *ngIf="firstName.invalid && firstName.touched" class="error-message">
+                                            First name is required
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <!-- <label for="lastName{{i}}">Last name *</label> -->
+                                        <input type="text" id="lastName{{i}}" [(ngModel)]="passenger.lastName"
+                                            name="lastName{{i}}" required #lastName="ngModel" class="form-control"
+                                            placeholder="Last name *">
+                                        <div *ngIf="lastName.invalid && lastName.touched" class="error-message">
+                                            Last name is required
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group form-group-small">
+                                        <!-- <label for="age{{i}}">Age *</label> -->
+                                        <input type="number" id="age{{i}}" [(ngModel)]="passenger.age" name="age{{i}}"
+                                            required min="1" max="120" #age="ngModel" class="form-control"
+                                            placeholder="Age *">
+                                        <div *ngIf="age.invalid && age.touched" class="error-message">
+                                            Valid age is required (1-120)
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Email and Mobile fields only for main passenger -->
+                                <div *ngIf="i === 0" class="form-row">
+                                    <div class="form-group">
+                                        <!-- <label for="email">Email address *</label> -->
+                                        <input type="email" id="email" [(ngModel)]="passenger.email" name="email"
+                                            required email #email="ngModel" class="form-control"
+                                            placeholder="Email address *">
+                                        <div *ngIf="email.invalid && email.touched" class="error-message">
+                                            Valid email is required
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group mobile-group">
+                                        <div class="mobile-input-group">
+                                            <!-- Country search input with autocomplete -->
+                                            <div class="country-code-container">
+                                                <input type="text" [(ngModel)]="selectedCountry"
+                                                    (input)="filterCountryCodes(selectedCountry)"
+                                                    (focus)="handleFocus()" (blur)="handleBlur()" name="countryInput"
+                                                    class="country-code"
+                                                    placeholder="{{ getCountryNameByCode(passengers[0]?.countryCode) }}"
+                                                    [ngClass]="{'focused': isCountryInputFocused}">
+                                                <!-- Display the selected country code -->
+                                                <div class="selected-code">{{passengers[0].countryCode}}</div>
+                                                <!-- Country suggestions dropdown with fixed positioning -->
+                                                <div *ngIf="filteredCountryCodes.length > 0 && isCountryInputFocused"
+                                                    class="country-suggestions-wrapper">
+                                                    <div class="country-suggestions">
+                                                        <ul>
+                                                            <li *ngFor="let country of filteredCountryCodes"
+                                                                (mousedown)="selectCountry(country)"
+                                                                [ngClass]="{'highlighted': country.code === passengers[0].countryCode}">
+                                                                <span class="country-name">{{ country.country }}</span>
+                                                                <span class="country-code-value">{{ country.code
+                                                                    }}</span>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- Mobile number input -->
+                                            <input type="tel" [(ngModel)]="passenger.mobile" name="mobile" required
+                                                pattern="^[0-9]{10}$" #mobile="ngModel"
+                                                class="form-control mobile-input" placeholder="Mobile number *">
+                                        </div>
+                                        <!-- Error message for mobile number -->
+                                        <div *ngIf="mobile.invalid && mobile.touched" class="error-message">
+                                            Valid 10-digit mobile number is required
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Price summary card -->
+                        <div class="price-summary-card">
+                            <div class="summary-header">
+                                <h3>Price summary</h3>
+                            </div>
+                            <div class="price-summary">
+                                <div class="summary-row">
+                                    <span>Flight price ({{ passengerCount }} {{ passengerCount > 1 ? 'passengers' :
+                                        'passenger'
+                                        }})</span>
+                                    <span>INR {{ selectedFlight?.price * passengerCount }}</span>
+                                </div>
+                                <div class="summary-row">
+                                    <span>Taxes and fees</span>
+                                    <span>Included</span>
+                                </div>
+                                <div class="summary-row total">
+                                    <span>Total price</span>
+                                    <span>INR {{ getTotalPrice() }}</span>
+                                </div>
+                                <div class="summary-note">
+                                    By proceeding, you agree to our terms and conditions
+                                </div>
+                                <button type="submit" [disabled]="bookingForm.invalid" class="checkout-button">Proceed
+                                    to
+                                    payment</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

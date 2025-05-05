@@ -1,0 +1,20 @@
+<h2 mat-dialog-title class="dialog-title">
+    📩 Contact Request Details
+</h2>
+
+<mat-dialog-content class="dialog-content">
+    <div class="contact-info">
+        <p><strong>Name:</strong> {{ contact.name }}</p>
+        <p><strong>Email:</strong> {{ contact.email }}</p>
+        <p><strong>Phone:</strong> {{ contact.phoneNumber }}</p>
+        <p><strong>Message:</strong></p>
+        <div class="message-box">
+            {{ contact.message }}
+        </div>
+        <p><strong>Submitted At:</strong> {{ contact.submittedAt | date:'short' }}</p>
+    </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-button class="close-btn" (click)="onNoClick()">✖ Close</button>
+</mat-dialog-actions>

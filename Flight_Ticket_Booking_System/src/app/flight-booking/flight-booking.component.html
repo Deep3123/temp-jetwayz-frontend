@@ -1,0 +1,168 @@
+<main id="maincontent">
+    <div class="book-header">
+        <p class="title">BOOK</p>
+        <h1 style="font-family: Emirates-Bold,sans-serif; font-size: 50px;">Book a flight</h1>
+        <p class="subtitle">Search for JetWayz flights and book online. See our routes and schedules, and discover more
+            about the experience you can look forward to on board.</p>
+    </div>
+
+    <div class="booking-container">
+        <div class="booking-tabs">
+            <ul>
+                <li class="active"><button>One way</button></li>
+                <li><button>Return</button></li>
+            </ul>
+        </div>
+
+        <div class="skywards-login">
+            <i class="fa fa-user-circle"></i>
+            <a routerLink="/login">Log in to book Classic Rewards</a>
+            <i class="fa fa-chevron-right"></i>
+        </div>
+
+        <div class="search-form">
+            <div class="booking-form">
+                <!-- First row: 3 fields -->
+                <div class="form-row">
+                    <div class="input-group">
+                        <input type="text" class="input-field" placeholder="Departure airport" required
+                            [(ngModel)]="departureAirport">
+                        <!-- <button class="clear-btn"><i class="fa fa-times"></i></button> -->
+                        <!-- <div *ngIf="departureAirportField.invalid && departureAirportField.touched" class="error-message">
+                            <small>Departure airport is required.</small>
+                        </div> -->
+                    </div>
+                    <div class="input-group">
+                        <input type="text" class="input-field" placeholder="Arrival airport" required
+                            [(ngModel)]="arrivalAirport">
+                        <!-- <button class="clear-btn"><i class="fa fa-times"></i></button> -->
+                        <!-- <div *ngIf="arrivalAirportField.invalid && arrivalAirportField.touched" class="error-message">
+                            <small>Arrival airport is required.</small>
+                        </div> -->
+                    </div>
+                    <div class="input-group date-range">
+                        <!-- Departing Date -->
+                        <mat-form-field appearance="outline" class="input-field-2 left-field">
+                            <input matInput [matDatepicker]="departingPicker" [min]="minDate"
+                                (dateInput)="validateDate($event, 'departure')" placeholder="Departing" required
+                                name="departing" ngModel [(ngModel)]="departureTime">
+                            <mat-datepicker-toggle matSuffix [for]="departingPicker"></mat-datepicker-toggle>
+                            <mat-datepicker #departingPicker></mat-datepicker>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="input-field-2 right-field">
+                            <input matInput [matDatepicker]="returningPicker" [min]="minDate"
+                                (dateInput)="validateDate($event, 'arrival')" placeholder="Returning" required
+                                name="returning" ngModel [(ngModel)]="arrivalTime">
+                            <mat-datepicker-toggle matSuffix [for]="returningPicker"></mat-datepicker-toggle>
+                            <mat-datepicker #returningPicker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+
+                </div>
+
+                <!-- Second row: 2 fields + button -->
+                <div class="form-row">
+                    <div class="input-group">
+                        <div class="input-group passenger-group">
+                            <input type="text" class="input-field" placeholder="Passengers" readonly
+                                [value]="passengerCountText" (click)="toggleCounter()" />
+
+                            <div class="passenger-counter" *ngIf="showCounter">
+                                <p class="drop_title">Passengers</p>
+                                <hr />
+
+                                <!-- Adult -->
+                                <div class="counter-row">
+                                    <button (click)="decrement('adult')">-</button>
+                                    <div class="passenger-info">
+                                        <strong>{{ adultCount }} Adult</strong>
+                                        <small>Ages 12+</small>
+                                    </div>
+                                    <button (click)="increment('adult')" [disabled]="passengerCount >= 9">+</button>
+                                </div>
+
+                                <!-- Child -->
+                                <div class="counter-row">
+                                    <button (click)="decrement('child')">-</button>
+                                    <div class="passenger-info">
+                                        <strong>{{ childCount }} Child</strong>
+                                        <small>Ages 2–11</small>
+                                    </div>
+                                    <button (click)="increment('child')" [disabled]="passengerCount >= 9">+</button>
+                                </div>
+
+                                <!-- Infant -->
+                                <div class="counter-row">
+                                    <button (click)="decrement('infant')">-</button>
+                                    <div class="passenger-info">
+                                        <strong>{{ infantCount }} Infant</strong>
+                                        <small>Ages under 2, on lap</small>
+                                    </div>
+                                    <button (click)="increment('infant')" [disabled]="passengerCount >= 9">+</button>
+                                </div>
+
+                                <div class="passenger-note">
+                                    <hr />
+                                    <p>Please note: You can book for a maximum of nine passengers.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- <button class="clear-btn"><i class="fa fa-chevron-down"></i></button> -->
+                    </div>
+                    <div class="input-group class-group">
+                        <input type="text" class="input-field class-input" required placeholder="Class"
+                            [value]="selectedClass" readonly (click)="toggleClassDropdown()" />
+
+                        <div class="class-dropdown" *ngIf="showClassDropdown">
+                            <p class="drop_title">Select class</p>
+                            <hr />
+                            <ul>
+                                <li (click)="selectClass('Economy')">Economy</li>
+                                <li (click)="selectClass('Business')">Business</li>
+                                <li (click)="selectClass('First Class')">First Class</li>
+                            </ul>
+                        </div>
+                        <!-- <button class="clear-btn"><i class="fa fa-chevron-down"></i></button> -->
+
+                    </div>
+
+                    <div class="input-group">
+                        <button class="search-button" (click)="onSubmit()">Search flights</button>
+                    </div>
+                </div>
+                <div class="promo-search">
+                    <button class="promo-code">
+                        Use promotional code
+                        <i class="fa fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<section class="info-section">
+    <h2>How to book a flight ticket with JetWayz</h2>
+    <div class="info-content">
+        <p><strong>Book a flight ticket online</strong></p>
+        <p>To find the right air ticket for your trip, just enter the location you're flying from and your flight
+            destination. Enter your dates, class of travel and the number of passengers. Select 'Search flights' to
+            continue with the online flight booking process and book a flight ticket that suits your travel plans.
+        </p>
+        <p><strong>Compare flight ticket fares</strong></p>
+        <p>Choose from a range of fares that give you more benefits on your journey. You can choose JetWayz fares
+            that give you more baggage allowance, free seat selection and greater flexibility to change your travel
+            dates. Some fares also offer upgrade options and more Skywards Miles.</p>
+    </div>
+</section>
+
+<div *ngIf="isLoading" class="spinner-overlay">
+    <div class="text-center">
+        <div class="spinner-border text-light mb-3" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+        <div class="text-light fs-4 animated-dots">Loading<span class="dots">.</span></div>
+    </div>
+</div>

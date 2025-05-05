@@ -1,0 +1,531 @@
+/* Enhance table styles */
+#userTable {
+  font-size: 14px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Darken the header row */
+#userTable thead {
+  background-color: #343a40;
+  color: #fff;
+}
+
+/* Hover effect for rows */
+#userTable tbody tr:hover {
+  background-color: #f1f1f1;
+  cursor: pointer;
+}
+
+/* Style for Action buttons */
+#userTable .btn {
+  padding: 5px 10px;
+  font-size: 14px;
+  border-radius: 50px;
+}
+
+#userTable .btn-link {
+  color: #007bff;
+  font-size: 16px;
+}
+
+#userTable .btn-warning {
+  background-color: #ffc107;
+  border: none;
+  color: white;
+}
+
+#userTable .btn-danger {
+  background-color: #dc3545;
+  border: none;
+  color: white;
+}
+
+#userTable .btn-warning:hover,
+#userTable .btn-danger:hover {
+  opacity: 0.8;
+}
+
+/* Additional padding for form */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.table thead th {
+  background-color: #343a40;
+  color: white;
+}
+
+.table td {
+  vertical-align: middle;
+  font-size: 14px;
+}
+
+/* Main container styles with improved spacing */
+.admin-container {
+  padding-left: 32px;
+  padding-right: 32px;
+  margin-bottom: 80px;
+  min-height: calc(100vh - 64px);
+  overflow: visible; /* Changed from hidden to visible */
+  position: relative; /* Added position relative */
+}
+
+/* Enhanced modern header */
+.header-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 40px;
+  position: relative;
+}
+
+.title-row {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
+  margin-bottom: 24px;
+}
+
+.button-row {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Modern title styling */
+.header-container h1 {
+  margin: 0;
+  font-weight: 500;
+  color: #3a3a64;
+  font-size: 38px;
+  letter-spacing: 0.5px;
+  position: relative;
+  padding-bottom: 12px;
+}
+
+.header-container h1::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(90deg, #5e60ce, #64dfdf);
+  border-radius: 3px;
+}
+
+/* Improved button styling */
+.add-button {
+  border-radius: 28px;
+  padding: 0 28px;
+  height: 46px;
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+  color: white;
+  font-weight: 500;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: none;
+}
+
+.add-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(99, 102, 241, 0.4);
+  background: linear-gradient(135deg, #4f46e5, #4338ca);
+}
+
+.add-button mat-icon {
+  margin-right: 8px;
+}
+
+/* Card styling with softer shadows */
+.content-card {
+  border-radius: 16px;
+  overflow: visible !important; /* Changed from hidden to visible */
+  background-color: white;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15) !important;
+  transition: box-shadow 0.3s ease;
+  margin-bottom: 30px; /* Added bottom margin */
+}
+
+.content-card:hover {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Custom styling for the mat-card to ensure shadow is visible */
+mat-card.content-card {
+  display: flex;
+  flex-direction: column;
+  border-radius: 16px !important;
+  overflow: visible !important; /* This is crucial to show the shadow */
+}
+
+mat-card-content {
+  padding: 0 !important;
+  overflow: visible !important; /* Ensure content overflow doesn't hide shadow */
+}
+
+/* Search field styling */
+.filter-container {
+  padding: 24px 28px 12px;
+  background-color: #f8f9fa;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.search-field {
+  width: 320px;
+  transition: width 0.3s ease;
+}
+
+.search-field:focus-within {
+  width: 360px;
+}
+
+/* Table container with improved scrolling */
+.table-container {
+  min-height: 200px; /* Minimum height */
+  /* max-height: calc(100vh - 320px); */
+  overflow-x: auto; /* Only allow horizontal scrolling if needed */
+  overflow-y: visible; /* Don't auto-scroll vertically */
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 #f1f5f9;
+}
+
+.table-container::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.table-container::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+  background-color: #cbd5e1;
+  border-radius: 4px;
+}
+
+.flight-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+/* Enhanced column styles */
+th.mat-header-cell {
+  background-color: #f0f4ff;
+  color: #4338ca;
+  font-weight: 600;
+  padding: 18px 16px;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+td.mat-cell {
+  padding: 16px;
+  font-size: 14.5px;
+  color: #334155;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+/* Flight number cell with emphasis */
+.flight-number-cell {
+  font-weight: 600;
+  color: #1e293b;
+  letter-spacing: 0.5px;
+}
+
+/* Price cell styling */
+.price-cell {
+  font-weight: 600;
+  color: #047857;
+}
+
+/* Improved row styling */
+tr.flight-row {
+  transition: all 0.2s ease;
+}
+
+tr.flight-row:hover {
+  background-color: rgba(99, 102, 241, 0.04);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.mat-column-position {
+  width: 70px;
+  text-align: center;
+}
+
+/* Enhanced actions column */
+.actions-cell {
+  width: 130px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.actions-header {
+  text-align: center;
+}
+
+/* Button styling */
+.edit-button {
+  color: #059669 !important;
+  transition: all 0.2s ease;
+  margin-right: 8px;
+}
+
+.delete-button {
+  color: #dc2626 !important;
+  transition: all 0.2s ease;
+}
+
+.edit-button:hover,
+.delete-button:hover {
+  transform: scale(1.15);
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+/* Enhanced class chip styles */
+.class-chip {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  display: inline-block;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+  transition: all 0.2s ease;
+  letter-spacing: 0.5px;
+}
+
+.class-chip:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+}
+
+.economy-class {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+}
+
+.business-class {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: white;
+}
+
+.first-class {
+  background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+  color: white;
+  width: max-content;
+}
+
+/* No data styling */
+.no-data {
+  padding: 48px 0;
+}
+
+.no-data-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #64748b;
+}
+
+.no-data-icon {
+  font-size: 48px;
+  height: 48px;
+  width: 48px;
+  margin-bottom: 16px;
+  opacity: 0.7;
+}
+
+/* Custom paginator */
+.custom-paginator {
+  border-top: 1px solid #e2e8f0;
+  background-color: #fafbff;
+  border-radius: 0 0 16px 16px; /* Round the bottom corners */
+  overflow: visible !important;
+}
+
+/* Enhanced loading spinner */
+.spinner-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1050;
+}
+
+.spinner-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.spinner {
+  width: 60px;
+  height: 60px;
+  border: 5px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  border-top-color: #6366f1;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-text {
+  color: white;
+  font-size: 20px;
+  margin-top: 24px;
+  font-weight: 500;
+  position: relative;
+}
+
+.loading-dots {
+  display: inline-block;
+  position: relative;
+}
+
+.loading-dots:after {
+  content: "";
+  animation: dots 1.5s infinite;
+}
+
+@keyframes dots {
+  0%,
+  20% {
+    content: ".";
+  }
+  40% {
+    content: "..";
+  }
+  60%,
+  100% {
+    content: "...";
+  }
+}
+
+.animated-dots .dots::after {
+  content: "";
+  display: inline-block;
+  animation: dotsAnim 1.5s infinite;
+}
+
+@keyframes dotsAnim {
+  0% {
+    content: ".";
+  }
+  25% {
+    content: "..";
+  }
+  50% {
+    content: "...";
+  }
+  75% {
+    content: "..";
+  }
+  100% {
+    content: ".";
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 1280px) {
+  .admin-container {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  .flight-table {
+    min-width: 1000px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .admin-container {
+    padding: 24px 16px;
+    /* min-height: 0; removed this line to match user CSS */
+  }
+
+  .content-card {
+    border-radius: 12px !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15) !important;
+    overflow: visible !important;
+  }
+
+  .table-container {
+    max-height: none; /* Remove max-height restriction on smaller screens */
+    overflow-x: auto; /* Only allow horizontal scrolling */
+    overflow-y: visible;
+  }
+
+  .search-field {
+    width: 280px;
+  }
+
+  .flight-table {
+    min-width: 1200px;
+  }
+}
+
+@media (max-width: 768px) {
+  .header-container h1 {
+    font-size: 32px;
+  }
+
+  .filter-container {
+    padding: 20px 16px 12px;
+    display: block;
+  }
+
+  .search-field,
+  .search-field:focus-within {
+    width: 100%;
+  }
+
+  .table-container {
+    overflow-x: auto;
+  }
+
+  .content-card {
+    border-radius: 10px !important;
+    margin: 0 -5px 20px -5px; /* Negative margin to extend the card */
+  }
+
+  th.mat-header-cell,
+  td.mat-cell {
+    padding: 12px;
+    font-size: 13px;
+  }
+
+  .class-chip {
+    padding: 4px 10px;
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-container h1 {
+    font-size: 28px;
+  }
+
+  .add-button {
+    padding: 0 20px;
+  }
+}

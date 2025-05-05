@@ -1,0 +1,78 @@
+<section class="vh-100">
+    <div class="container-fluid h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-md-9 col-lg-6 col-xl-5 text-center">
+                <img src="login.jpg" class="img-fluid" alt="JetWayz Login Banner">
+            </div>
+            <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1 mt-4">
+                <div class="login-container">
+                    <div class="login-header">
+                        <h2>Complete Your Profile</h2>
+                        <p>Just a few more details to get you started</p>
+                        <div class="orange-accent"></div>
+                    </div>
+
+                    <form #profileForm="ngForm" (ngSubmit)="onSubmit(profileForm)">
+                        <!-- Name input -->
+                        <div class="form-group">
+                            <label for="name">Full Name:</label>
+                            <input type="text" id="name" class="form-control" name="name" [(ngModel)]="profileData.name"
+                                required #name="ngModel" placeholder="Enter your full name" />
+                            <div *ngIf="name.invalid && name.touched" class="error-message">
+                                <div *ngIf="name.errors?.['required']">Full name is required</div>
+                            </div>
+                        </div>
+
+                        <!-- Username input -->
+                        <div class="form-group">
+                            <label for="username">Username:</label>
+                            <input type="text" id="username" class="form-control" name="username"
+                                [(ngModel)]="profileData.username" required pattern="^[a-zA-Z0-9_]+$" minlength="4"
+                                maxlength="15" #username="ngModel" placeholder="Choose a username" />
+                            <div *ngIf="username.invalid && username.touched" class="error-message">
+                                <div *ngIf="username.errors?.['required']">Username is required</div>
+                                <div *ngIf="username.errors?.['pattern']">Username can only contain alphanumeric
+                                    characters</div>
+                                <div *ngIf="username.errors?.['minlength']">Username must be at least 4 characters</div>
+                                <div *ngIf="username.errors?.['maxlength']">Username cannot be more than 15 characters
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Email input (read-only) -->
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" id="email" class="form-control" name="email"
+                                [(ngModel)]="profileData.email" required readonly #email="ngModel" />
+                        </div>
+
+                        <!-- Mobile Number input -->
+                        <div class="form-group">
+                            <label for="mobileNo">Mobile Number:</label>
+                            <input type="text" id="mobileNo" class="form-control" name="mobileNo"
+                                [(ngModel)]="profileData.mobileNo" required pattern="^[0-9]{10}$" #mobileNo="ngModel"
+                                placeholder="Enter your 10-digit mobile number" />
+                            <div *ngIf="mobileNo.invalid && mobileNo.touched" class="error-message">
+                                <div *ngIf="mobileNo.errors?.['required']">Mobile number is required</div>
+                                <div *ngIf="mobileNo.errors?.['pattern']">Please enter a valid 10-digit mobile number
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="login-button" [disabled]="profileForm.invalid">Complete
+                            Profile</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div *ngIf="isLoading" class="spinner-overlay">
+    <div class="text-center">
+        <div class="spinner-border text-light mb-3" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+        <div class="text-light fs-4 animated-dots">Loading<span class="dots">.</span></div>
+    </div>
+</div>

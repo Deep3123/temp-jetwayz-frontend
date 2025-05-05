@@ -1,0 +1,42 @@
+.dialog-title {
+  font-size: 22px;
+  font-weight: bold;
+  text-align: center;
+  color: #333;
+  padding: 12px 0;
+  border-bottom: 3px solid #28a745;
+  background: #f8f9fa;
+  border-radius: 8px 8px 0 0;
+}
+
+.dialog-content {
+  padding: 20px;
+  background: #fff;
+}
+
+.booking-info p {
+  margin: 10px 0;
+  font-size: 16px;
+  color: #333;
+}
+
+mat-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 0 0 8px 8px;
+}
+
+.close-btn {
+  font-weight: bold;
+  padding: 8px 15px;
+  border-radius: 5px;
+  background: #e9ecef;
+  transition: 0.3s ease;
+}
+
+.close-btn:hover {
+  background: #d6d8db;
+}

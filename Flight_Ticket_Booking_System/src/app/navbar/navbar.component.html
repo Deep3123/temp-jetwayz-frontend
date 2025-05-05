@@ -1,0 +1,84 @@
+<nav id="nav" class="navbar navbar-expand-xl navbar-light p-0" style="background-color: rgb(0, 0, 0);">
+    <div class="container-fluid">
+        <!-- Navbar Brand (Logo) -->
+        <a class="navbar-logo-wrapper" routerLink="/">
+            <img src="JetWayz_5.png" alt="JetWayz Logo" class="navbar-logo desktop-logo" />
+            <img src="JetWayz_6.png" alt="JetWayz Mobile Logo" class="navbar-logo mobile-logo" />
+        </a>
+
+        <!-- Toggler Button for Mobile View -->
+        <button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- Navbar Content -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link nav-link-2 fw-bold text-light" routerLink="/"
+                        style="display: flex; align-items: center; gap: 5px;">
+                        <mat-icon>home</mat-icon> Home
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link fw-bold text-light page-scroll" [routerLink]="'/'" [fragment]="'about'"
+                        style="display: flex; align-items: center; gap: 5px;">
+                        <mat-icon>info</mat-icon> About Us
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link fw-bold text-light" routerLink="/contact-us"
+                        style="display: flex; align-items: center; gap: 5px;">
+                        <mat-icon>perm_identity</mat-icon> Get in Touch
+                    </a>
+                </li>
+
+                <!-- Admin Dropdown for All Screen Sizes -->
+                <li *ngIf="isAdmin" class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle fw-bold text-light" href="#" id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false"
+                        style="display: flex; align-items: center; gap: 5px;">
+                        <mat-icon>perm_contact_calendar</mat-icon> Admin Dashboard
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" routerLink="/admin">Manage Users</a></li>
+                        <li><a class="dropdown-item" routerLink="/flight">Flight Details</a></li>
+                        <li><a class="dropdown-item" routerLink="/contact-data">Contact Data</a></li>
+                        <li><a class="dropdown-item" routerLink="/all-bookings-data">Bookings</a></li>
+                    </ul>
+                </li>
+
+                <!-- Login and Signup links (for non-logged in users) -->
+                <li *ngIf="!isLoggedIn" class="nav-item d-xl-none">
+                    <a routerLink="/login" class="nav-link fw-bold text-light"
+                        style="display: flex; align-items: center; gap: 5px;">
+                        <mat-icon>login</mat-icon> Login
+                    </a>
+                </li>
+                <li *ngIf="!isLoggedIn" class="nav-item d-xl-none">
+                    <a routerLink="/register" class="nav-link fw-bold text-light"
+                        style="display: flex; align-items: center; gap: 5px;">
+                        <mat-icon>add_to_home_screen</mat-icon> Signup
+                    </a>
+                </li>
+                <li *ngIf="isLoggedIn" class="nav-item d-xl-none">
+                    <a (click)="logout()" class="nav-link fw-bold text-light"
+                        style="display: flex; align-items: center; gap: 5px;">
+                        <mat-icon>exit_to_app</mat-icon> Logout
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Right-side Buttons -->
+        <div class="d-flex align-items-center ms-auto d-none d-xl-flex">
+            <button (click)="toggleTheme()" class="btn btn-outline-light rounded-pill mx-3">
+                <mat-icon>{{ darkMode ? 'brightness_7' : 'brightness_4' }}</mat-icon>
+            </button>
+            <a *ngIf="isLoggedIn" (click)="logout()" class="btn btn-light rounded-pill">Logout</a>
+            <a *ngIf="!isLoggedIn" routerLink="/login" class="btn btn-outline-light me-3 rounded-pill">Login</a>
+            <a *ngIf="!isLoggedIn" routerLink="/register" class="btn btn-light rounded-pill">Signup</a>
+        </div>
+    </div>
+</nav>

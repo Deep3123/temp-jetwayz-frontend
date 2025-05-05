@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 600">
+  <!-- Background with gradient -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#e6f2ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f8f9fa;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="500" height="600" fill="url(#bgGradient)" rx="20" ry="20"/>
+  
+  <!-- Company logo text - repositioned -->
+  <text x="250" y="100" font-family="Arial, sans-serif" font-size="42" font-weight="700" text-anchor="middle" fill="#0053b3">JetWayz</text>
+  <text x="250" y="130" font-family="Arial, sans-serif" font-size="16" font-weight="400" text-anchor="middle" fill="#666666">Flight Booking System</text>
+  
+  <!-- Accent line -->
+  <path d="M150, 150 L350, 150" stroke="#ff6b00" stroke-width="3" fill="none"/>
+  
+  <!-- Welcome text -->
+  <text x="250" y="220" font-family="Arial, sans-serif" font-size="36" font-weight="700" text-anchor="middle" fill="#333333">Welcome!</text>
+  
+  <!-- Registration prompt -->
+  <text x="250" y="270" font-family="Arial, sans-serif" font-size="20" font-weight="400" text-anchor="middle" fill="#333333">Your journey begins here</text>
+  
+  <!-- Sign up text -->
+  <text x="250" y="340" font-family="Arial, sans-serif" font-size="24" font-weight="600" text-anchor="middle" fill="#0053b3">Register Now</text>
+  
+  <!-- Benefits list - repositioned with more spacing -->
+  <g transform="translate(125, 380)">
+    <circle cx="10" cy="10" r="5" fill="#ff6b00"/>
+    <text x="25" y="15" font-family="Arial, sans-serif" font-size="16" fill="#555555">Book flights with ease</text>
+    
+    <circle cx="10" cy="50" r="5" fill="#ff6b00"/>
+    <text x="25" y="55" font-family="Arial, sans-serif" font-size="16" fill="#555555">Exclusive member discounts</text>
+    
+    <circle cx="10" cy="90" r="5" fill="#ff6b00"/>
+    <text x="25" y="95" font-family="Arial, sans-serif" font-size="16" fill="#555555">Personalized travel plans</text>
+    
+    <circle cx="10" cy="130" r="5" fill="#ff6b00"/>
+    <text x="25" y="135" font-family="Arial, sans-serif" font-size="16" fill="#555555">24/7 customer support</text>
+  </g>
+  
+  <!-- Bottom design element - adjusted to prevent overlap -->
+  <path d="M0,570 Q250,520 500,570 L500,600 L0,600 Z" fill="#0053b3" opacity="0.8"/>
+</svg>

@@ -1,0 +1,180 @@
+<!-- <div class="container mt-5" style="margin-bottom: 80px;">
+    <div class="table-responsive">
+        <table class="table table-striped table-hover table-bordered text-center" id="bookingTable">
+            <thead class="thead-dark">
+                <tr>
+                    <th rowspan="2">S.No.</th>
+                    <th rowspan="2">Flight ID</th>
+                    <th rowspan="2">Amount</th>
+                    <th rowspan="2">Booking Date</th>
+                    <th rowspan="2">Total tickets</th>
+                    <th colspan="6">Passenger Details</th>
+                    <th colspan="2" rowspan="2" class="text-center">Actions</th>
+                </tr>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Age</th>
+                    <th>Email</th>
+                    <th>Country Code</th>
+                    <th>Mobile</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let booking of bookings; let i = index">
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ booking.flightId }}</td>
+                    <td>₹{{ booking.amount }}</td>
+                    <td>{{ booking.bookingDate | date:'short' }}</td>
+                    <td>{{ booking.count }}</td>
+                    <td>{{ booking.firstName }}</td>
+                    <td>{{ booking.lastName }}</td>
+                    <td>{{ booking.age }}</td>
+                    <td>{{ booking.email }}</td>
+                    <td>{{ booking.countryCode }}</td>
+                    <td>{{ booking.mobile }}</td>
+
+                    <td class="text-center">
+                        <button class="btn btn-info" (click)="viewBookingDetails(booking)">
+                            <mat-icon style="color: white;">visibility</mat-icon>
+                        </button>
+                    </td>
+
+                    <td class="text-center">
+                        <button class="btn btn-danger" (click)="deleteBookingDetails(booking)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div> -->
+
+
+<!-- Enhanced Booking Management Interface -->
+<div class="admin-container">
+    <!-- Streamlined header with improved layout -->
+    <div class="header-container">
+        <div class="title-row">
+            <h1 class="mat-headline-5">Booking Management</h1>
+        </div>
+    </div>
+
+    <!-- Main content card with improved styling -->
+    <mat-card class="mat-elevation-z2 content-card">
+        <mat-card-content>
+            <!-- Search and filter area -->
+            <div class="filter-container">
+                <mat-form-field appearance="outline" class="search-field">
+                    <mat-label>Search</mat-label>
+                    <input matInput placeholder="Search bookings" (keyup)="applyFilter($event)" #input>
+                    <mat-icon matSuffix>search</mat-icon>
+                </mat-form-field>
+            </div>
+
+            <!-- Enhanced table container -->
+            <div class="table-container">
+                <table mat-table [dataSource]="dataSource" matSort class="booking-table">
+                    <!-- Position Column -->
+                    <ng-container matColumnDef="position">
+                        <th mat-header-cell *matHeaderCellDef> No. </th>
+                        <td mat-cell *matCellDef="let booking; let i = index"> {{ getRowNumber(i) }} </td>
+                    </ng-container>
+
+                    <!-- Flight ID Column -->
+                    <ng-container matColumnDef="flightId">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Flight ID </th>
+                        <td mat-cell *matCellDef="let booking" class="flight-id-cell"> {{ booking.flightId }} </td>
+                    </ng-container>
+
+                    <!-- Amount Column -->
+                    <ng-container matColumnDef="amount">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Amount </th>
+                        <td mat-cell *matCellDef="let booking"> ₹{{ booking.amount }} </td>
+                    </ng-container>
+
+                    <!-- Booking Date Column -->
+                    <ng-container matColumnDef="bookingDate">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Booking Date </th>
+                        <td mat-cell *matCellDef="let booking"> {{ booking.bookingDate | date:'short' }} </td>
+                    </ng-container>
+
+                    <!-- Total Tickets Column -->
+                    <ng-container matColumnDef="count">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Total Tickets </th>
+                        <td mat-cell *matCellDef="let booking"> {{ booking.count }} </td>
+                    </ng-container>
+
+                    <!-- Passenger Name Column -->
+                    <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Passenger Name </th>
+                        <td mat-cell *matCellDef="let booking" class="name-cell">
+                            {{ booking.firstName }} {{ booking.lastName }}
+                        </td>
+                    </ng-container>
+
+                    <!-- Email Column -->
+                    <ng-container matColumnDef="email">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+                        <td mat-cell *matCellDef="let booking"> {{ booking.email }} </td>
+                    </ng-container>
+
+                    <!-- Phone Column -->
+                    <ng-container matColumnDef="phone">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Phone </th>
+                        <td mat-cell *matCellDef="let booking"> {{ booking.countryCode }} {{ booking.mobile }} </td>
+                    </ng-container>
+
+                    <!-- View Action Column -->
+                    <ng-container matColumnDef="view">
+                        <th mat-header-cell *matHeaderCellDef class="actions-header"> View </th>
+                        <td mat-cell *matCellDef="let booking" class="actions-cell">
+                            <button mat-icon-button class="view-button" (click)="viewBookingDetails(booking)"
+                                matTooltip="View Details">
+                                <mat-icon>visibility</mat-icon>
+                            </button>
+                        </td>
+                    </ng-container>
+
+                    <!-- Delete Action Column -->
+                    <ng-container matColumnDef="delete">
+                        <th mat-header-cell *matHeaderCellDef class="actions-header"> Delete </th>
+                        <td mat-cell *matCellDef="let booking" class="actions-cell">
+                            <button mat-icon-button class="delete-button" (click)="deleteBookingDetails(booking)"
+                                matTooltip="Delete Booking">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="booking-row"></tr>
+
+                    <!-- Row shown when no data available -->
+                    <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell no-data" [attr.colspan]="displayedColumns.length">
+                            <div class="no-data-container">
+                                <mat-icon class="no-data-icon">flight_off</mat-icon>
+                                <p>No booking data available</p>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+                <!-- Paginator with improved styling -->
+                <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of bookings"
+                    class="custom-paginator"></mat-paginator>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>
+
+<div *ngIf="isLoading" class="spinner-overlay">
+    <div class="text-center">
+        <div class="spinner-border text-light mb-3" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+        <div class="text-light fs-4 animated-dots">Loading<span class="dots">.</span></div>
+    </div>
+</div>

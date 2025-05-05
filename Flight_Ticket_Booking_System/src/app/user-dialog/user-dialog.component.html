@@ -1,0 +1,68 @@
+<h2 mat-dialog-title>{{ isEditing ? 'Edit User' : 'Add User' }}</h2>
+
+<mat-dialog-content>
+    <form #userForm="ngForm" (ngSubmit)="submitForm(userForm)">
+        <!-- Name -->
+        <mat-form-field appearance="fill" class="w-100">
+            <mat-label>Name</mat-label>
+            <input matInput type="text" [(ngModel)]="selectedUser.name" name="name" required>
+        </mat-form-field>
+
+        <!-- Email -->
+        <mat-form-field appearance="fill" class="w-100">
+            <mat-label>Email</mat-label>
+            <input matInput type="email" [(ngModel)]="selectedUser.emailId" name="emailId" required>
+        </mat-form-field>
+
+        <!-- Mobile Number -->
+        <mat-form-field appearance="fill" class="w-100">
+            <mat-label>Mobile No</mat-label>
+            <input matInput type="tel" [(ngModel)]="selectedUser.mobileNo" name="mobileNo" required>
+        </mat-form-field>
+
+        <!-- Username -->
+        <mat-form-field appearance="fill" class="w-100">
+            <mat-label>Username</mat-label>
+            <input *ngIf="isEditing" matInput type="text" [(ngModel)]="selectedUser.username" name="username" required
+                disabled>
+            <input *ngIf="!isEditing" matInput type="text" [(ngModel)]="selectedUser.username" name="username" required>
+        </mat-form-field>
+
+        <!-- Password -->
+        <mat-form-field appearance="fill" class="w-100">
+            <mat-label>Password</mat-label>
+            <input *ngIf="isEditing" matInput type="password" [(ngModel)]="selectedUser.password" name="password"
+                required disabled>
+            <input *ngIf="!isEditing" matInput type="password" [(ngModel)]="selectedUser.password" name="password"
+                required>
+        </mat-form-field>
+
+        <!-- Role -->
+        <mat-form-field appearance="fill" class="w-100">
+            <mat-label>Role</mat-label>
+            <mat-select [(ngModel)]="selectedUser.role" name="role" required>
+                <mat-option value="USER">User</mat-option>
+                <mat-option value="ADMIN">Admin</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-dialog-actions>
+            <button mat-button (click)="onNoClick()">Cancel</button>
+            <button class="btn btn-primary text-light" type="submit">
+                {{ isEditing ? 'Update' : 'Add' }} User
+            </button>
+            <!-- <button mat-raised-button color="primary" type="submit">
+                {{ isEditing ? 'Update' : 'Add' }} User
+            </button> -->
+        </mat-dialog-actions>
+    </form>
+</mat-dialog-content>
+
+<div *ngIf="isLoading" class="spinner-overlay">
+    <div class="text-center">
+        <div class="spinner-border text-light mb-3" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+        <div class="text-light fs-4 animated-dots">Loading<span class="dots">.</span></div>
+    </div>
+</div>

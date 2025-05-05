@@ -1,0 +1,23 @@
+<h2 mat-dialog-title class="dialog-title">📄 Booking Details</h2>
+
+<mat-dialog-content class="dialog-content">
+    <div class="booking-info">
+        <p><strong>Flight ID:</strong> {{ booking.flightId }}</p>
+        <p><strong>Payment ID:</strong> {{ booking.paymentId }}</p>
+        <p><strong>Amount:</strong> ₹{{ booking.amount }}</p>
+        <p><strong>Passenger Count:</strong> {{ booking.count }}</p>
+        <p><strong>Booking Date:</strong> {{ booking.bookingDate | date:'short' }}</p>
+
+        <hr>
+
+        <h4>Passenger Info</h4>
+        <p><strong>Name:</strong> {{ booking.firstName }} {{ booking.lastName }}</p>
+        <p><strong>Age:</strong> {{ booking.age }}</p>
+        <p><strong>Email:</strong> {{ booking.email }}</p>
+        <p><strong>Phone:</strong> {{ booking.countryCode }} {{ booking.mobile }}</p>
+    </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-button class="close-btn" (click)="onClose()">✖ Close</button>
+</mat-dialog-actions>

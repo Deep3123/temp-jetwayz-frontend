@@ -1,8 +1,8 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 import { ContactServiceService } from "../services/contact-service.service";
 import Swal from "sweetalert2";
-import { AuthService } from "../services/auth-service.service";
-import { UserAuthServiceService } from "../services/user-auth-service.service";
+import { isPlatformBrowser } from "@angular/common"; // Import isPlatformBrowser
+import { PLATFORM_ID, Inject } from "@angular/core"; // Inject PLATFORM_ID to check the platform
 
 @Component({
   selector: "app-contact",
@@ -10,9 +10,7 @@ import { UserAuthServiceService } from "../services/user-auth-service.service";
   templateUrl: "./contact.component.html",
   styleUrls: ["./contact.component.css"],
 })
-// export class ContactComponent implements OnInit {
-  export class ContactComponent{
-
+export class ContactComponent {
   name: string = "";
   email: string = "";
   phoneNumber: string = "";
@@ -22,32 +20,10 @@ import { UserAuthServiceService } from "../services/user-auth-service.service";
 
   constructor(
     private service: ContactServiceService,
-    // private userAuthService: UserAuthServiceService,
-    // private authService: AuthService
+    @Inject(PLATFORM_ID) private platformId: Object // Inject PLATFORM_ID to check the platform
   ) {}
 
-  // ngOnInit(): void {
-  //   this.userAuthService.checkAccountExists().subscribe(
-  //     (response) => {},
-  //     (error) => {
-  //       console.log(error);
-  //       // ✅ Ensure error message is displayed properly
-  //       const errorMessage =
-  //         error.error?.message || error.error?.error?.message;
-  //       Swal.fire({
-  //         icon: "error",
-  //         title: "Login Failed!",
-  //         text:
-  //           errorMessage ||
-  //           "We couldn't log you in. Your account may have been deleted, or you might not be logged in. Please try again. If the issue persists, consider creating a new account.",
-  //         confirmButtonText: "OK",
-  //       });
-  //       // this.router.navigate(["/"]);
-  //       this.authService.logout(); // ✅ Ensure user is logged out
-  //     }
-  //   );
-  // }
-
+  // On form submission
   onSubmit(form: any) {
     if (form.invalid) {
       return;
@@ -60,38 +36,41 @@ import { UserAuthServiceService } from "../services/user-auth-service.service";
       message: this.message,
     };
 
-    this.isLoading=true;
+    this.isLoading = true;
 
     this.service.saveContactData(contactRequest).subscribe(
       (response) => {
-
-        this.isLoading=false;
-        // Success popup
-        Swal.fire({
-          icon: "success",
-          title: "We received your query!",
-          text: response.message,
-          confirmButtonText: "OK",
-        }).then(() => {
-          // Reset form fields after success
-          form.reset();
-        });
+        this.isLoading = false;
+        // Success popup (only in the browser)
+        if (isPlatformBrowser(this.platformId)) {
+          Swal.fire({
+            icon: "success",
+            title: "We received your query!",
+            text: response.message,
+            confirmButtonText: "OK",
+          }).then(() => {
+            // Reset form fields after success
+            form.reset();
+          });
+        }
       },
       (error) => {
-        this.isLoading=false;
-        // Error popup
-        let errorMessage = "Something went wrong. Please try again later.";
+        this.isLoading = false;
+        // Error popup (only in the browser)
+        if (isPlatformBrowser(this.platformId)) {
+          let errorMessage = "Something went wrong. Please try again later.";
 
-        if (error.error && error.error.message) {
-          errorMessage = error.error.message; // If error contains a custom message from backend
+          if (error.error && error.error.message) {
+            errorMessage = error.error.message; // If error contains a custom message from backend
+          }
+
+          Swal.fire({
+            icon: "error",
+            title: "Oops, something went wrong!",
+            text: errorMessage,
+            confirmButtonText: "OK",
+          });
         }
-
-        Swal.fire({
-          icon: "error",
-          title: "Oops, something went wrong!",
-          text: errorMessage,
-          confirmButtonText: "OK",
-        });
       }
     );
   }

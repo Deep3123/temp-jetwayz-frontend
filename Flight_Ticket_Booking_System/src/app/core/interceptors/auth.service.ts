@@ -207,13 +207,16 @@ import { AuthService } from "../../services/auth-service.service";
 import { Router } from "@angular/router";
 import Swal from "sweetalert2";
 import { EncryptionService } from "../../services/encryption.service";
+import { isPlatformBrowser } from "@angular/common"; // Import isPlatformBrowser
+import { PLATFORM_ID, Inject as PlatformInject } from "@angular/core"; // Import PLATFORM_ID
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private encryptionService: EncryptionService
+    private encryptionService: EncryptionService,
+    @PlatformInject(PLATFORM_ID) private platformId: Object // Inject PLATFORM_ID
   ) {}
 
   intercept(
@@ -307,21 +310,27 @@ export class AuthInterceptor implements HttpInterceptor {
         if (error.status === 401) {
           // Token expired or invalid
           this.authService.logout();
-          Swal.fire({
-            icon: "info",
-            title: "Login again!",
-            text: "Session expired. Please log in again.",
-            confirmButtonText: "OK",
-          });
+
+          // Ensure Swal is used only in the browser
+          if (isPlatformBrowser(this.platformId)) {
+            Swal.fire({
+              icon: "info",
+              title: "Login again!",
+              text: "Session expired. Please log in again.",
+              confirmButtonText: "OK",
+            });
+          }
           this.router.navigate(["/login"]);
         } else if (error.status === 403) {
           // Forbidden, handle as necessary
-          Swal.fire({
-            icon: "info",
-            title: "Permissions denied!",
-            text: "Access denied. You do not have the necessary permissions.",
-            confirmButtonText: "OK",
-          });
+          if (isPlatformBrowser(this.platformId)) {
+            Swal.fire({
+              icon: "info",
+              title: "Permissions denied!",
+              text: "Access denied. You do not have the necessary permissions.",
+              confirmButtonText: "OK",
+            });
+          }
         }
         return throwError(error);
       })

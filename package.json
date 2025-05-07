@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@angular/common": "^19.2.9",
     "sweetalert2": "^11.17.2"
   }
 }

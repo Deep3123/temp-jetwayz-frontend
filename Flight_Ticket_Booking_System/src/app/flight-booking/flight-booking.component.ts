@@ -20,10 +20,10 @@ export class FlightBookingComponent {
 
   departureAirport: string = "";
   arrivalAirport: string = "";
-  departureTime: any = "";
-  arrivalTime: any = "";
+  departureTime: any = null;
+  arrivalTime: any = null;
 
-  isLoading: any = false;
+  isLoading: boolean = false;
 
   constructor(
     private service: FlightAuthServiceService,
@@ -53,11 +53,11 @@ export class FlightBookingComponent {
   }
 
   increment(type: "adult" | "child" | "infant"): void {
-    if (this.passengerCount >= 9) return;
-
-    if (type === "adult") this.adultCount++;
-    if (type === "child") this.childCount++;
-    if (type === "infant") this.infantCount++;
+    if (this.passengerCount < 9) {
+      if (type === "adult") this.adultCount++;
+      if (type === "child") this.childCount++;
+      if (type === "infant") this.infantCount++;
+    }
   }
 
   decrement(type: "adult" | "child" | "infant"): void {
@@ -72,31 +72,33 @@ export class FlightBookingComponent {
   }
 
   formatDateTime(date: Date): string {
-    if (date != null) {
-      const pad = (n: number) => n.toString().padStart(2, "0");
+    if (!date) throw new Error("Invalid date");
+    const pad = (n: number) => n.toString().padStart(2, "0");
+    const year = date.getFullYear();
+    const month = pad(date.getMonth() + 1);
+    const day = pad(date.getDate());
+    const hours = pad(date.getHours());
+    const minutes = pad(date.getMinutes());
+    const seconds = pad(date.getSeconds());
+    const milliseconds = date.getMilliseconds().toString().padStart(3, "0");
 
-      const year = date.getFullYear();
-      const month = pad(date.getMonth() + 1);
-      const day = pad(date.getDate());
-
-      const hours = pad(date.getHours());
-      const minutes = pad(date.getMinutes());
-      const seconds = pad(date.getSeconds());
-      const milliseconds = date.getMilliseconds().toString().padStart(3, "0");
-
-      const timezoneOffset = -date.getTimezoneOffset();
-      const sign = timezoneOffset >= 0 ? "+" : "-";
-      const timezoneHours = pad(Math.floor(Math.abs(timezoneOffset) / 60));
-      const timezoneMinutes = pad(Math.abs(timezoneOffset) % 60);
-
-      // Format to Java-compatible format: yyyy-MM-dd'T'HH:mm:ss.SSSZ
-      // return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.${milliseconds}${sign}${timezoneHours}${timezoneMinutes}`;
-      return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.${milliseconds}`;
-    }
-    throw new Error("Invalid date");
+    return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.${milliseconds}`;
   }
 
-  onSubmit() {
+  onSubmit(): void {
+    if (
+      this.departureTime &&
+      this.arrivalTime &&
+      this.departureTime >= this.arrivalTime
+    ) {
+      Swal.fire({
+        icon: "error",
+        title: "Invalid Date Range",
+        text: "Departure date cannot be later than or equal to the arrival date.",
+      });
+      return;
+    }
+
     const flight = {
       departureAirport: this.departureAirport.toLowerCase().trim(),
       arrivalAirport: this.arrivalAirport.toLowerCase().trim(),
@@ -106,14 +108,10 @@ export class FlightBookingComponent {
       flightClass: this.selectedClass,
     };
 
-    // console.log(flight);
-    console.log("Departure:", this.departureTime, "Arrival:", this.arrivalTime);
-
     this.isLoading = true;
     this.service.getFlightByAllDetails(flight).subscribe(
       (response) => {
         this.isLoading = false;
-        // Success popup
         Swal.fire({
           icon: "success",
           title: "Flights Loaded Successfully ✈️",
@@ -122,27 +120,19 @@ export class FlightBookingComponent {
             "We found matching flights based on your search criteria.",
           confirmButtonText: "View Results",
         }).then(() => {
-          // console.log("Flight search response:", response);
-          // You can add logic here to show or navigate to the results
           this.router.navigate(["/flight-result"], {
-            state: { flights: response, count: this.passengerCount }, // Pass count directly
+            state: { flights: response, count: this.passengerCount },
           });
         });
       },
       (error) => {
-        // Error popup
-        let errorMessage =
-          "We couldn't find any flights matching your search. Please try different dates or locations.";
-
-        if (error.error && error.error.message) {
-          errorMessage = error.error.message; // Custom message from backend
-        }
-
         this.isLoading = false;
         Swal.fire({
           icon: "error",
           title: "No Flights Found 😔",
-          text: errorMessage,
+          text:
+            error.error?.message ||
+            "We couldn't find any flights matching your search. Please try different dates or locations.",
           confirmButtonText: "Try Again",
         });
       }
@@ -153,11 +143,9 @@ export class FlightBookingComponent {
     return new Date(new Date().setHours(0, 0, 0, 0));
   }
 
-  validateDate(event: any, type: "departure" | "arrival") {
-    const selectedRaw = new Date(event.value); // Raw selected date
-    const today = new Date(); // Today's date for comparison
-
-    // Strip both dates to compare day-wise only
+  validateDate(event: any, type: "departure" | "arrival"): void {
+    const selectedRaw = new Date(event.value);
+    const today = new Date();
     const selectedDateOnly = new Date(
       selectedRaw.setHours(0, 0, 0, 0)
     ).getTime();
@@ -171,8 +159,6 @@ export class FlightBookingComponent {
           type === "departure" ? "Departure" : "Arrival"
         } date cannot be in the past.`,
       });
-
-      // Reset the selected date if it's invalid
       if (type === "departure") {
         this.departureTime = null;
       } else {
@@ -181,7 +167,6 @@ export class FlightBookingComponent {
       return;
     }
 
-    // If selected date is today, append current time
     if (selectedDateOnly === todayDateOnly) {
       const now = new Date();
       selectedRaw.setHours(
@@ -191,44 +176,14 @@ export class FlightBookingComponent {
         now.getMilliseconds()
       );
     } else {
-      // If it's not today, we set the time to midnight (00:00)
       selectedRaw.setHours(0, 0, 0, 0);
     }
 
-    // Assign the updated date (with current time if today) to the respective field
     if (type === "departure") {
       this.departureTime = selectedRaw;
     } else {
       this.arrivalTime = selectedRaw;
     }
-
-    // If selected date is today, append current time
-    // let finalDate: Date;
-    // if (selectedDateOnly === todayDateOnly) {
-    //   const now = new Date();
-    //   finalDate = new Date(
-    //     selectedRaw.getFullYear(),
-    //     selectedRaw.getMonth(),
-    //     selectedRaw.getDate(),
-    //     now.getHours(),
-    //     now.getMinutes(),
-    //     now.getSeconds()
-    //   );
-    // } else {
-    //   // Future date, set time to 00:00 (or leave as is)
-    //   finalDate = new Date(
-    //     selectedRaw.getFullYear(),
-    //     selectedRaw.getMonth(),
-    //     selectedRaw.getDate()
-    //   );
-    // }
-
-    // // Assign updated date to model
-    // if (type === 'departure') {
-    //   this.departureTime = finalDate;
-    // } else {
-    //   this.arrivalTime = finalDate;
-    // }
   }
 
   @HostListener("document:click", ["$event"])

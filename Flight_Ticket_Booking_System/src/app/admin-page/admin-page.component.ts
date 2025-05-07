@@ -132,40 +132,48 @@
 //   }
 // }
 
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
-import { UserDialogComponent } from '../user-dialog/user-dialog.component';
-import { UserAuthServiceService } from '../services/user-auth-service.service';
-import Swal from 'sweetalert2';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  AfterViewInit,
+  Inject,
+  PLATFORM_ID,
+  OnDestroy,
+} from "@angular/core";
+import { isPlatformBrowser } from "@angular/common";
+import { MatDialog } from "@angular/material/dialog";
+import { MatPaginator } from "@angular/material/paginator";
+import { MatSort } from "@angular/material/sort";
+import { MatTableDataSource } from "@angular/material/table";
+import { UserDialogComponent } from "../user-dialog/user-dialog.component";
+import { UserAuthServiceService } from "../services/user-auth-service.service";
+import Swal from "sweetalert2";
+import { Subject } from "rxjs";
+import { takeUntil } from "rxjs/operators";
 
 @Component({
-  selector: 'app-admin-page',
+  selector: "app-admin-page",
   standalone: false,
-  templateUrl: './admin-page.component.html',
-  styleUrls: ['./admin-page.component.css']
+  templateUrl: "./admin-page.component.html",
+  styleUrls: ["./admin-page.component.css"],
 })
-export class AdminPageComponent implements OnInit, AfterViewInit {
+export class AdminPageComponent implements OnInit, AfterViewInit, OnDestroy {
   users: any[] = [];
   isLoading = false;
   dataSource = new MatTableDataSource<any>([]);
   private destroy$ = new Subject<void>();
 
-  // Column definitions
   displayedColumns: string[] = [
-    'position',
-    'name',
-    'email',
-    'username',
-    'phone',
-    'role',
-    'createdAt',
-    'updatedAt',
-    'actions'
+    "position",
+    "name",
+    "email",
+    "username",
+    "phone",
+    "role",
+    "createdAt",
+    "updatedAt",
+    "actions",
   ];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -173,17 +181,20 @@ export class AdminPageComponent implements OnInit, AfterViewInit {
 
   constructor(
     private userService: UserAuthServiceService,
-    public dialog: MatDialog
-  ) { }
+    public dialog: MatDialog,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
 
   ngOnInit(): void {
     this.getAllUsers();
   }
 
   ngAfterViewInit() {
-    // Connect the sort and paginator to the data source
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    // Safely apply paginator/sort only in the browser
+    if (isPlatformBrowser(this.platformId)) {
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }
   }
 
   ngOnDestroy() {
@@ -191,7 +202,6 @@ export class AdminPageComponent implements OnInit, AfterViewInit {
     this.destroy$.complete();
   }
 
-  // Filter function for the search box
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -203,28 +213,31 @@ export class AdminPageComponent implements OnInit, AfterViewInit {
 
   getAllUsers() {
     this.isLoading = true;
-    this.userService.getAllUsers().pipe(
-      takeUntil(this.destroy$)
-    ).subscribe({
-      next: (response: any) => {
-        this.isLoading = false;
-        this.users = response;
-        // Update the data source with new data
-        this.dataSource.data = this.users;
-      },
-      error: (error) => {
-        this.isLoading = false;
-        Swal.fire({
-          icon: 'error',
-          title: error.status,
-          text: error.message || error.error?.message || 'Error while fetching data!',
-          confirmButtonText: 'OK'
-        });
-      }
-    });
+    this.userService
+      .getAllUsers()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (response: any) => {
+          this.isLoading = false;
+          this.users = response;
+          this.dataSource.data = this.users;
+        },
+        error: (error) => {
+          this.isLoading = false;
+          Swal.fire({
+            icon: "error",
+            title: error.status,
+            text:
+              error.message ||
+              error.error?.message ||
+              "Error while fetching data!",
+            confirmButtonText: "OK",
+          });
+          console.error("Error fetching users:", error);
+        },
+      });
   }
 
-  // Get the actual row number
   getRowNumber(i: number): number {
     if (!this.paginator) return i + 1;
     return i + 1 + this.paginator.pageIndex * this.paginator.pageSize;
@@ -232,39 +245,41 @@ export class AdminPageComponent implements OnInit, AfterViewInit {
 
   openForm(): void {
     const dialogRef = this.dialog.open(UserDialogComponent, {
-      width: '600px',
-      data: { user: null }
+      width: "600px",
+      data: { user: null },
     });
 
-    dialogRef.afterClosed().pipe(
-      takeUntil(this.destroy$)
-    ).subscribe(result => {
-      if (result) {
-        this.getAllUsers();
-      }
-    });
+    dialogRef
+      .afterClosed()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((result) => {
+        if (result) {
+          this.getAllUsers();
+        }
+      });
   }
 
   editUser(user: any): void {
     const dialogRef = this.dialog.open(UserDialogComponent, {
-      width: '600px',
-      data: { user: user }
+      width: "600px",
+      data: { user: user },
     });
 
-    dialogRef.afterClosed().pipe(
-      takeUntil(this.destroy$)
-    ).subscribe(result => {
-      if (result) {
-        this.getAllUsers();
-      }
-    });
+    dialogRef
+      .afterClosed()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((result) => {
+        if (result) {
+          this.getAllUsers();
+        }
+      });
   }
 
   deleteUser(user: any): void {
     Swal.fire({
-      title: 'Are you sure?',
+      title: "Are you sure?",
       text: "You won't be able to revert this!",
-      icon: 'warning',
+      icon: "warning",
       showCancelButton: true,
       confirmButtonText: "Yes, delete it!",
       cancelButtonText: "No, cancel!",
@@ -273,34 +288,35 @@ export class AdminPageComponent implements OnInit, AfterViewInit {
     }).then((result) => {
       if (result.isConfirmed) {
         this.isLoading = true;
-        this.userService.deleteUser(user.username).pipe(
-          takeUntil(this.destroy$)
-        ).subscribe({
-          next: (response) => {
-            this.isLoading = false;
-            Swal.fire({
-              icon: 'success',
-              title: 'Deleted!',
-              text: response.message || 'User has been deleted.',
-              confirmButtonText: 'OK'
-            });
-            this.getAllUsers();
-          },
-          error: (error) => {
-            this.isLoading = false;
-            Swal.fire({
-              icon: 'error',
-              title: error.status,
-              text: error.error?.message || 'Error deleting user!',
-              confirmButtonText: 'OK'
-            });
-          }
-        });
+        this.userService
+          .deleteUser(user.username)
+          .pipe(takeUntil(this.destroy$))
+          .subscribe({
+            next: (response) => {
+              this.isLoading = false;
+              Swal.fire({
+                icon: "success",
+                title: "Deleted!",
+                text: response.message || "User has been deleted.",
+                confirmButtonText: "OK",
+              });
+              this.getAllUsers();
+            },
+            error: (error) => {
+              this.isLoading = false;
+              Swal.fire({
+                icon: "error",
+                title: error.status,
+                text: error.error?.message || "Error deleting user!",
+                confirmButtonText: "OK",
+              });
+              console.error("Error deleting user:", error);
+            },
+          });
       }
     });
   }
 
-  // Track function for ngFor performance optimization
   trackByFn(index: number, user: any) {
     return user.id || user.username;
   }
@@ -730,7 +746,6 @@ export class AdminPageComponent implements OnInit, AfterViewInit {
 //     });
 //   }
 // }
-
 
 // import { Component, OnInit, OnDestroy } from '@angular/core';
 // import { MatDialog } from '@angular/material/dialog';

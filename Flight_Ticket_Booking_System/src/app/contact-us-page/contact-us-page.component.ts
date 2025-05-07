@@ -130,12 +130,14 @@
 
 import { Component, OnInit, ViewChild, AfterViewInit } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
-import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from "@angular/material/table";
+import { MatPaginator } from "@angular/material/paginator";
+import { MatSort } from "@angular/material/sort";
 import { ContactUsDialogComponent } from "../contact-us-dialog/contact-us-dialog.component";
 import { ContactServiceService } from "../services/contact-service.service";
 import Swal from "sweetalert2";
+import { isPlatformBrowser } from "@angular/common"; // Import isPlatformBrowser
+import { PLATFORM_ID, Inject as PlatformInject } from "@angular/core"; // Import PLATFORM_ID
 
 @Component({
   selector: "app-contact-us-page",
@@ -150,14 +152,14 @@ export class ContactUsPageComponent implements OnInit, AfterViewInit {
 
   // Define displayed columns for the table
   displayedColumns: string[] = [
-    'position',
-    'name',
-    'email',
-    'phone',
-    'message',
-    'submittedAt',
-    'view',
-    'delete'
+    "position",
+    "name",
+    "email",
+    "phone",
+    "message",
+    "submittedAt",
+    "view",
+    "delete",
   ];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -165,8 +167,9 @@ export class ContactUsPageComponent implements OnInit, AfterViewInit {
 
   constructor(
     private contactService: ContactServiceService,
-    public dialog: MatDialog
-  ) { }
+    public dialog: MatDialog,
+    @PlatformInject(PLATFORM_ID) private platformId: Object // Inject PLATFORM_ID
+  ) {}
 
   ngOnInit(): void {
     this.getAllContacts();
@@ -189,12 +192,17 @@ export class ContactUsPageComponent implements OnInit, AfterViewInit {
       },
       (error) => {
         this.isLoading = false;
-        Swal.fire({
-          icon: "error",
-          title: "Error!",
-          text: error.message || error.error.message || "Error while fetching data!",
-          confirmButtonText: "OK",
-        });
+        if (isPlatformBrowser(this.platformId)) {
+          Swal.fire({
+            icon: "error",
+            title: "Error!",
+            text:
+              error.message ||
+              error.error.message ||
+              "Error while fetching data!",
+            confirmButtonText: "OK",
+          });
+        }
       }
     );
   }
@@ -213,43 +221,50 @@ export class ContactUsPageComponent implements OnInit, AfterViewInit {
 
   // Delete contact query with confirmation
   deleteContact(contact: any): void {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Yes, delete it!",
-      cancelButtonText: "No, cancel!",
-      confirmButtonColor: "#dc2626",
-      cancelButtonColor: "#6B7280",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.isLoading = true;
-        this.contactService.deleteContact(contact).subscribe(
-          (response) => {
-            this.isLoading = false;
-            Swal.fire({
-              icon: "success",
-              title: "Contact Deleted!",
-              text: "The contact query has been deleted successfully.",
-              confirmButtonText: "OK",
-              confirmButtonColor: "#4F46E5",
-            });
-            this.getAllContacts();
-          },
-          (error) => {
-            this.isLoading = false;
-            Swal.fire({
-              icon: "error",
-              title: "Error Deleting Contact!",
-              text: error.error?.message || "Failed to delete contact query.",
-              confirmButtonText: "OK",
-              confirmButtonColor: "#4F46E5",
-            });
-          }
-        );
-      }
-    });
+    if (isPlatformBrowser(this.platformId)) {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, delete it!",
+        cancelButtonText: "No, cancel!",
+        confirmButtonColor: "#dc2626",
+        cancelButtonColor: "#6B7280",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.isLoading = true;
+          this.contactService.deleteContact(contact).subscribe(
+            (response) => {
+              this.isLoading = false;
+              if (isPlatformBrowser(this.platformId)) {
+                Swal.fire({
+                  icon: "success",
+                  title: "Contact Deleted!",
+                  text: "The contact query has been deleted successfully.",
+                  confirmButtonText: "OK",
+                  confirmButtonColor: "#4F46E5",
+                });
+              }
+              this.getAllContacts();
+            },
+            (error) => {
+              this.isLoading = false;
+              if (isPlatformBrowser(this.platformId)) {
+                Swal.fire({
+                  icon: "error",
+                  title: "Error Deleting Contact!",
+                  text:
+                    error.error?.message || "Failed to delete contact query.",
+                  confirmButtonText: "OK",
+                  confirmButtonColor: "#4F46E5",
+                });
+              }
+            }
+          );
+        }
+      });
+    }
   }
 
   // Apply filter for search functionality

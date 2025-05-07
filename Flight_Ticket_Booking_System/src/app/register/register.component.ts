@@ -1,9 +1,10 @@
-import { Component } from "@angular/core";
+import { Component, Inject, PLATFORM_ID } from "@angular/core";
 import { NgForm } from "@angular/forms";
 import { UserAuthServiceService } from "../services/user-auth-service.service"; // Ensure correct import
 import { User } from "../dtoClasses/user"; // Import the DTO class
 import Swal from "sweetalert2"; // SweetAlert for stylish pop-up
 import { Router } from "@angular/router";
+import { isPlatformBrowser } from "@angular/common"; // Import isPlatformBrowser to detect platform
 
 @Component({
   selector: "app-register",
@@ -14,8 +15,10 @@ import { Router } from "@angular/router";
 export class RegisterComponent {
   constructor(
     private router: Router,
-    private userAuthService: UserAuthServiceService
-  ) { }
+    private userAuthService: UserAuthServiceService,
+    @Inject(PLATFORM_ID) private platformId: any // Inject PLATFORM_ID to detect platform
+  ) {}
+
   user = new User();
   isLoading: any = false;
 
@@ -45,41 +48,55 @@ export class RegisterComponent {
       this.user.password = form.value.password;
 
       this.isLoading = true;
+
       // Call the service to save the user data
       this.userAuthService.saveUserData(this.user).subscribe(
         (response) => {
           this.isLoading = false;
+
           // Display success pop-up on successful registration
-          Swal.fire({
-            icon: "success",
-            title: "Registration Successful!",
-            text: response.message,
-            confirmButtonText: "OK",
-          }).then(() => {
-            form.reset(); // Reset the form after successful registration
-            this.router.navigate(["/login"]);
-          });
+          if (isPlatformBrowser(this.platformId)) {
+            // Ensure SweetAlert runs only on the browser
+            Swal.fire({
+              icon: "success",
+              title: "Registration Successful!",
+              text: response.message,
+              confirmButtonText: "OK",
+            }).then(() => {
+              form.reset(); // Reset the form after successful registration
+              this.router.navigate(["/login"]);
+            });
+          }
         },
         (error) => {
           this.isLoading = false;
           console.log(error);
+
           // Display error pop-up if registration fails
-          Swal.fire({
-            icon: "error",
-            title: "Registration Failed!",
-            text: error.error.message,
-            confirmButtonText: "OK",
-          });
+          if (isPlatformBrowser(this.platformId)) {
+            // Ensure SweetAlert runs only on the browser
+            Swal.fire({
+              icon: "error",
+              title: "Registration Failed!",
+              text: error.error.message,
+              confirmButtonText: "OK",
+            });
+          }
         }
       );
     } else {
       this.isLoading = false;
-      Swal.fire({
-        icon: "warning",
-        title: "Form Invalid",
-        text: "Please fill in all fields correctly.",
-        confirmButtonText: "OK",
-      });
+
+      // Display warning pop-up for invalid form submission
+      if (isPlatformBrowser(this.platformId)) {
+        // Ensure SweetAlert runs only on the browser
+        Swal.fire({
+          icon: "warning",
+          title: "Form Invalid",
+          text: "Please fill in all fields correctly.",
+          confirmButtonText: "OK",
+        });
+      }
     }
   }
 }

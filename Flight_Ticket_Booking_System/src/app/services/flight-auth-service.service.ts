@@ -1,6 +1,8 @@
-import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { Injectable, Inject, PLATFORM_ID } from "@angular/core";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { Observable } from "rxjs";
+import { isPlatformBrowser } from "@angular/common";
+import { environment } from "../../environments/environment";
 
 @Injectable({
   providedIn: "root",
@@ -10,7 +12,10 @@ export class FlightAuthServiceService {
   private apiUrl = "https://jetwayz-backend.onrender.com/flight";
   // private apiUrl = 'https://jetwayz-backend-production.up.railway.app/flight';
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
 
   // Get all flights
   getAllFlights(): Observable<any> {
@@ -24,6 +29,7 @@ export class FlightAuthServiceService {
     );
   }
 
+  // Get flight based on a flight object (departure/arrival/time/date)
   getFlightByAllDetails(flight: any): Observable<any> {
     return this.http.post(
       `${this.apiUrl}/get-flight-details-by-departure-and-arrival`,
@@ -41,20 +47,22 @@ export class FlightAuthServiceService {
     return this.http.post(`${this.apiUrl}/update-flight-details`, flight);
   }
 
-  // Delete flight details
+  // Delete flight details by flight number
   deleteFlight(flightNumber: string): Observable<any> {
     return this.http.get(
       `${this.apiUrl}/delete-flight-details/${flightNumber}`
     );
   }
 
-  // Search flights by departure and arrival
+  // Search flights by route (departure and arrival)
   searchFlightsByRoute(departure: string, arrival: string): Observable<any> {
+    const params = new HttpParams()
+      .set("departureStation", departure)
+      .set("arrivalStation", arrival);
+
     return this.http.get(
       `${this.apiUrl}/get-flight-details-by-departure-and-arrival`,
-      {
-        params: { departureStation: departure, arrivalStation: arrival },
-      }
+      { params }
     );
   }
 }

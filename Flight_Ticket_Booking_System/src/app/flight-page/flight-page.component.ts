@@ -133,15 +133,22 @@
 //   }
 // }
 
-
-import { Component, OnInit, ViewChild, AfterViewInit } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  AfterViewInit,
+  Inject,
+  PLATFORM_ID,
+} from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
-import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from "@angular/material/table";
+import { MatPaginator } from "@angular/material/paginator";
+import { MatSort } from "@angular/material/sort";
 import { FlightDialogComponent } from "../flight-dialog/flight-dialog.component";
 import { FlightAuthServiceService } from "../services/flight-auth-service.service";
 import Swal from "sweetalert2";
+import { isPlatformBrowser } from "@angular/common"; // Import isPlatformBrowser
 
 @Component({
   selector: "app-flight-page",
@@ -156,19 +163,19 @@ export class FlightPageComponent implements OnInit, AfterViewInit {
 
   // Define displayed columns for the table
   displayedColumns: string[] = [
-    'position',
-    'flightNumber',
-    'departureDate',
-    'departureTime',
-    'arrivalDate',
-    'arrivalTime',
-    'departureAirport',
-    'arrivalAirport',
-    'price',
-    'flightClass',
-    'duration',
-    'seats',
-    'actions'
+    "position",
+    "flightNumber",
+    "departureDate",
+    "departureTime",
+    "arrivalDate",
+    "arrivalTime",
+    "departureAirport",
+    "arrivalAirport",
+    "price",
+    "flightClass",
+    "duration",
+    "seats",
+    "actions",
   ];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -176,8 +183,9 @@ export class FlightPageComponent implements OnInit, AfterViewInit {
 
   constructor(
     private flightService: FlightAuthServiceService,
-    public dialog: MatDialog
-  ) { }
+    public dialog: MatDialog,
+    @Inject(PLATFORM_ID) private platformId: any // Inject PLATFORM_ID
+  ) {}
 
   ngOnInit(): void {
     this.getAllFlights();
@@ -200,12 +208,18 @@ export class FlightPageComponent implements OnInit, AfterViewInit {
       },
       (error) => {
         this.isLoading = false;
-        Swal.fire({
-          icon: "error",
-          title: "Error!",
-          text: error.message || error.error.message || "Error while fetching data!",
-          confirmButtonText: "OK",
-        });
+        if (isPlatformBrowser(this.platformId)) {
+          // Ensure SweetAlert2 runs only in the browser
+          Swal.fire({
+            icon: "error",
+            title: "Error!",
+            text:
+              error.message ||
+              error.error.message ||
+              "Error while fetching data!",
+            confirmButtonText: "OK",
+          });
+        }
       }
     );
   }
@@ -233,43 +247,50 @@ export class FlightPageComponent implements OnInit, AfterViewInit {
   }
 
   deleteFlight(flight: any): void {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Yes, delete it!",
-      cancelButtonText: "No, cancel!",
-      confirmButtonColor: "#dc2626",
-      cancelButtonColor: "#6B7280",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.isLoading = true;
-        this.flightService.deleteFlight(flight.flightNumber).subscribe(
-          (response) => {
-            this.isLoading = false;
-            Swal.fire({
-              icon: "success",
-              title: "Flight Deleted!",
-              text: response.message,
-              confirmButtonText: "OK",
-              confirmButtonColor: "#4F46E5",
-            });
-            this.getAllFlights();
-          },
-          (error) => {
-            this.isLoading = false;
-            Swal.fire({
-              icon: "error",
-              title: "Error Deleting Flight!",
-              text: error.error.message,
-              confirmButtonText: "OK",
-              confirmButtonColor: "#4F46E5",
-            });
-          }
-        );
-      }
-    });
+    if (isPlatformBrowser(this.platformId)) {
+      // Ensure SweetAlert2 runs only in the browser
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, delete it!",
+        cancelButtonText: "No, cancel!",
+        confirmButtonColor: "#dc2626",
+        cancelButtonColor: "#6B7280",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.isLoading = true;
+          this.flightService.deleteFlight(flight.flightNumber).subscribe(
+            (response) => {
+              this.isLoading = false;
+              if (isPlatformBrowser(this.platformId)) {
+                Swal.fire({
+                  icon: "success",
+                  title: "Flight Deleted!",
+                  text: response.message,
+                  confirmButtonText: "OK",
+                  confirmButtonColor: "#4F46E5",
+                });
+              }
+              this.getAllFlights();
+            },
+            (error) => {
+              this.isLoading = false;
+              if (isPlatformBrowser(this.platformId)) {
+                Swal.fire({
+                  icon: "error",
+                  title: "Error Deleting Flight!",
+                  text: error.error.message,
+                  confirmButtonText: "OK",
+                  confirmButtonColor: "#4F46E5",
+                });
+              }
+            }
+          );
+        }
+      });
+    }
   }
 
   // Format duration from minutes to hours and minutes
@@ -292,14 +313,14 @@ export class FlightPageComponent implements OnInit, AfterViewInit {
   // Get appropriate class chip color based on flight class
   getClassChipColor(flightClass: string): string {
     flightClass = flightClass.toLowerCase();
-    if (flightClass.includes('economy')) {
-      return 'economy-class';
-    } else if (flightClass.includes('business')) {
-      return 'business-class';
-    } else if (flightClass.includes('first')) {
-      return 'first-class';
+    if (flightClass.includes("economy")) {
+      return "economy-class";
+    } else if (flightClass.includes("business")) {
+      return "business-class";
+    } else if (flightClass.includes("first")) {
+      return "first-class";
     }
-    return 'economy-class'; // Default
+    return "economy-class"; // Default
   }
 
   getRowNumber(i: number): number {

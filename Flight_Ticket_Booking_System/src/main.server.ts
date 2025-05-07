@@ -54,7 +54,7 @@ export function app(): express.Express {
       document: indexHtml, // Path to your index.html file
       url: `${protocol}://${headers.host}${originalUrl}`,
       extraProviders: [
-        { provide: APP_BASE_HREF, useValue: req.baseUrl }, // Changed to `providers` instead of `extraProviders`
+        { provide: APP_BASE_HREF, useValue: req.baseUrl || "/" },
       ],
     })
       .then((html: string) => res.send(html))

@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, Inject, PLATFORM_ID } from "@angular/core";
 import { NgForm } from "@angular/forms";
 import { LoginReq } from "../dtoClasses/login-req";
 import Swal from "sweetalert2";
@@ -10,6 +10,7 @@ import {
   GoogleLoginProvider,
   SocialAuthService,
 } from "@abacritt/angularx-social-login";
+import { isPlatformBrowser } from "@angular/common"; // Import isPlatformBrowser
 
 @Component({
   selector: "app-login",
@@ -23,8 +24,9 @@ export class LoginComponent {
     private userAuthService: UserAuthServiceService,
     private authService: AuthService,
     private captchaService: CaptchaServiceService,
-    private socialAuthService: SocialAuthService
-  ) { }
+    private socialAuthService: SocialAuthService,
+    @Inject(PLATFORM_ID) private platformId: any // Inject PLATFORM_ID to detect platform
+  ) {}
 
   login = new LoginReq();
   captchaInput: string = "";
@@ -69,18 +71,21 @@ export class LoginComponent {
         }, 800);
       },
       (error) => {
-        // ✅ Ensure error message is displayed properly
+        // Ensure error message is displayed properly
         const errorMessage =
           error.message ||
           error.error?.message ||
           "Error fetching CAPTCHA image.";
 
-        Swal.fire({
-          icon: "error",
-          title: "Captcha not loading!",
-          text: errorMessage,
-          confirmButtonText: "OK",
-        });
+        // Use SweetAlert2 only if in the browser
+        if (isPlatformBrowser(this.platformId)) {
+          Swal.fire({
+            icon: "error",
+            title: "Captcha not loading!",
+            text: errorMessage,
+            confirmButtonText: "OK",
+          });
+        }
       }
     );
   }
@@ -92,11 +97,9 @@ export class LoginComponent {
 
   onSubmit(form: any) {
     if (form.valid) {
-      // console.log(form.value);
-
       this.login.username = form.value.username;
       this.login.password = form.value.password;
-      this.login.captchaInput = form.value.captchaInput; // ✅ include captcha input
+      this.login.captchaInput = form.value.captchaInput; // include captcha input
 
       // Get the remember me value from the form
       const rememberMe = form.value.rememberMe || false;
@@ -105,69 +108,70 @@ export class LoginComponent {
       this.userAuthService.userLogin(this.login).subscribe(
         (response) => {
           this.isLoading = false;
-          Swal.fire({
-            icon: "success",
-            title: "Login Successful!",
-            text: "You have successfully logged in.",
-            confirmButtonText: "OK",
-          }).then(() => {
-            form.reset();
-            // Store token and role in AuthService with rememberMe flag
-            this.authService.login(response.token, response.role, rememberMe);
-            // Redirect based on role
-            if (response.role === "ADMIN") {
-              this.router.navigate(["/admin"]);
-            } else if (response.role === "USER") {
-              this.router.navigate(["/"]);
-            }
-          });
+          if (isPlatformBrowser(this.platformId)) {
+            Swal.fire({
+              icon: "success",
+              title: "Login Successful!",
+              text: "You have successfully logged in.",
+              confirmButtonText: "OK",
+            }).then(() => {
+              form.reset();
+              // Store token and role in AuthService with rememberMe flag
+              this.authService.login(response.token, response.role, rememberMe);
+              // Redirect based on role
+              if (response.role === "ADMIN") {
+                this.router.navigate(["/admin"]);
+              } else if (response.role === "USER") {
+                this.router.navigate(["/"]);
+              }
+            });
+          }
         },
         (error) => {
           this.isLoading = false;
           console.log(error);
 
-          // ✅ Ensure error message is displayed properly
+          // Ensure error message is displayed properly
           const errorMessage =
             error.error?.message ||
             error.error?.error?.message ||
             "Login failed. Please try again.";
 
-          Swal.fire({
-            icon: "error",
-            title: "Login Failed!",
-            text: errorMessage,
-            confirmButtonText: "OK",
-          });
+          // Use SweetAlert2 only if in the browser
+          if (isPlatformBrowser(this.platformId)) {
+            Swal.fire({
+              icon: "error",
+              title: "Login Failed!",
+              text: errorMessage,
+              confirmButtonText: "OK",
+            });
+          }
+
           this.reloadCaptcha();
         }
       );
     } else {
-      Swal.fire({
-        icon: "warning",
-        title: "Form Invalid",
-        text: "Please fill in all fields correctly.",
-        confirmButtonText: "OK",
-      });
+      // Use SweetAlert2 only if in the browser
+      if (isPlatformBrowser(this.platformId)) {
+        Swal.fire({
+          icon: "warning",
+          title: "Form Invalid",
+          text: "Please fill in all fields correctly.",
+          confirmButtonText: "OK",
+        });
+      }
     }
   }
 
   // Method to initiate Google OAuth login
-  // signInWithGoogle(): void {
-  //   this.isLoading = true;
-
-  //   // Redirect to backend OAuth endpoint
-  //   window.location.href = "http://localhost:4200/oauth/complete-profile";
-
-  //   // window.location.href = "https://jetwayz.vercel.app/oauth/complete-profile";
-
-  //   // Note: The backend will handle the OAuth flow and redirect back to the frontend
-  //   // There's no need to use the SocialAuthService signIn method as we're using the backend for OAuth
-  // }
-
   signInWithGoogle(): void {
     this.isLoading = true;
-    // Redirect to backend OAuth endpoint - choose one based on environment
-    // window.location.href = "http://localhost:8080/oauth2/authorization/google?env=local"; // Development
-    window.location.href = "https://jetwayz-backend.onrender.com/oauth2/authorization/google?env=prod"; // Production
+
+    // Use the browser-specific redirection only if in the browser
+    if (isPlatformBrowser(this.platformId)) {
+      // Redirect to backend OAuth endpoint - choose one based on environment
+      window.location.href =
+        "https://jetwayz-backend.onrender.com/oauth2/authorization/google?env=prod"; // Production
+    }
   }
 }

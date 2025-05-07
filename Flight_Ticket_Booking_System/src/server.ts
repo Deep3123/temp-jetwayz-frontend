@@ -213,7 +213,7 @@ export function app(): express.Express {
       // Pass the AppServerModule class
       document: indexHtml, // Path to your index.html file
       url: `${protocol}://${headers.host}${originalUrl}`,
-      extraProviders: [{ provide: APP_BASE_HREF, useValue: req.baseUrl }],
+      extraProviders: [{ provide: APP_BASE_HREF, useValue: req.baseUrl || '/' }],
     })
       .then((html: string) => res.send(html))
       .catch((err: any) => {

@@ -1,5 +1,13 @@
-import { Component, EventEmitter, OnInit, Output } from "@angular/core";
+import {
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+  Inject,
+  PLATFORM_ID,
+} from "@angular/core";
 import { Router } from "@angular/router";
+import { isPlatformBrowser } from "@angular/common"; // Import isPlatformBrowser
 
 @Component({
   selector: "app-flight-results",
@@ -11,7 +19,10 @@ export class FlightResultsComponent implements OnInit {
   flightResults: any[] = [];
   count: any;
 
-  constructor(private router: Router) {
+  constructor(
+    private router: Router,
+    @Inject(PLATFORM_ID) private platformId: any
+  ) {
     const nav = this.router.getCurrentNavigation();
     this.flightResults = nav?.extras?.state?.["flights"] || [];
     this.count = nav?.extras?.state?.["count"] || 0;

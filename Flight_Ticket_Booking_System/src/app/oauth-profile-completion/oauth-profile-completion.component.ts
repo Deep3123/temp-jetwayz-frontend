@@ -1,8 +1,9 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Inject, PLATFORM_ID } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { OAuthService } from "../services/oauth.service";
 import { AuthService } from "../services/auth-service.service";
 import Swal from "sweetalert2";
+import { isPlatformBrowser } from "@angular/common";
 
 @Component({
   selector: "app-oauth-profile-completion",
@@ -25,25 +26,33 @@ export class OAuthProfileCompletionComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private oauthService: OAuthService,
-    private authService: AuthService
+    private authService: AuthService,
+    @Inject(PLATFORM_ID) private platformId: any
   ) {}
 
   ngOnInit(): void {
-    // Get params from URL
-    this.route.queryParamMap.subscribe((params) => {
-      this.token = params.get("token") || "";
-      this.profileData.email = params.get("email") || "";
-      this.profileData.name = params.get("name") || "";
-    });
-
-    if (!this.token) {
-      Swal.fire({
-        icon: "error",
-        title: "Authentication Error",
-        text: "No authentication token provided",
-        confirmButtonText: "OK",
-      }).then(() => {
-        this.router.navigate(["/login"]);
+    if (isPlatformBrowser(this.platformId)) {
+      this.route.queryParamMap.subscribe((params) => {
+        if (params) {
+          this.token = params.get("token") || "";
+          this.profileData.email = params.get("email") || "";
+          this.profileData.name = params.get("name") || "";
+  
+          if (!this.token) {
+            Swal.fire({
+              icon: "error",
+              title: "Authentication Error",
+              text: "No authentication token provided",
+              confirmButtonText: "OK",
+            }).then(() => {
+              this.router.navigate(["/login"]);
+            });
+          }
+        } else {
+          // Handle case where params is undefined
+          console.error("Query parameters are undefined");
+          this.router.navigate(["/login"]);
+        }
       });
     }
   }
@@ -58,21 +67,22 @@ export class OAuthProfileCompletionComponent implements OnInit {
           (response) => {
             this.isLoading = false;
 
-            // Store token and role
             this.authService.login(response.token, response.role, false);
 
-            Swal.fire({
-              icon: "success",
-              title: "Profile Complete!",
-              text: "Your profile has been completed successfully.",
-              confirmButtonText: "OK",
-            }).then(() => {
-              if (response.role === "ADMIN") {
-                this.router.navigate(["/admin"]);
-              } else {
-                this.router.navigate(["/"]);
-              }
-            });
+            if (isPlatformBrowser(this.platformId)) {
+              Swal.fire({
+                icon: "success",
+                title: "Profile Complete!",
+                text: "Your profile has been completed successfully.",
+                confirmButtonText: "OK",
+              }).then(() => {
+                if (response.role === "ADMIN") {
+                  this.router.navigate(["/admin"]);
+                } else {
+                  this.router.navigate(["/"]);
+                }
+              });
+            }
           },
           (error) => {
             this.isLoading = false;
@@ -80,21 +90,25 @@ export class OAuthProfileCompletionComponent implements OnInit {
               error.error?.message ||
               "Error completing profile. Please try again.";
 
-            Swal.fire({
-              icon: "error",
-              title: "Profile Completion Failed",
-              text: errorMessage,
-              confirmButtonText: "OK",
-            });
+            if (isPlatformBrowser(this.platformId)) {
+              Swal.fire({
+                icon: "error",
+                title: "Profile Completion Failed",
+                text: errorMessage,
+                confirmButtonText: "OK",
+              });
+            }
           }
         );
     } else {
-      Swal.fire({
-        icon: "warning",
-        title: "Form Invalid",
-        text: "Please fill in all fields correctly.",
-        confirmButtonText: "OK",
-      });
+      if (isPlatformBrowser(this.platformId)) {
+        Swal.fire({
+          icon: "warning",
+          title: "Form Invalid",
+          text: "Please fill in all fields correctly.",
+          confirmButtonText: "OK",
+        });
+      }
     }
   }
 }

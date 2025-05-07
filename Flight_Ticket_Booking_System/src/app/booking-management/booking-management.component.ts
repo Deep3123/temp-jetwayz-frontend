@@ -136,7 +136,14 @@
 //   }
 // }
 
-import { Component, OnInit, ViewChild, AfterViewInit } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  AfterViewInit,
+  PLATFORM_ID,
+  Inject,
+} from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { MatTableDataSource } from "@angular/material/table";
 import { MatPaginator, PageEvent } from "@angular/material/paginator";
@@ -144,6 +151,7 @@ import { MatSort } from "@angular/material/sort";
 import { BookingDetailsDialogComponent } from "../booking-details-dialog/booking-details-dialog.component";
 import { BookingServiceService } from "../services/booking-service.service";
 import Swal from "sweetalert2";
+import { isPlatformBrowser } from "@angular/common"; // Import this to check if the platform is browser
 
 @Component({
   selector: "app-booking-management",
@@ -177,8 +185,9 @@ export class BookingManagementComponent implements OnInit, AfterViewInit {
 
   constructor(
     private bookingService: BookingServiceService,
-    public dialog: MatDialog
-  ) { }
+    public dialog: MatDialog,
+    @Inject(PLATFORM_ID) private platformId: Object // Inject platformId to check the platform
+  ) {}
 
   ngOnInit(): void {
     this.getAllBookings();
@@ -207,16 +216,19 @@ export class BookingManagementComponent implements OnInit, AfterViewInit {
       },
       (error) => {
         this.isLoading = false;
-        Swal.fire({
-          icon: "error",
-          title: "Error Fetching Bookings",
-          text:
-            error.message ||
-            error.error?.message ||
-            "There was a problem loading bookings data.",
-          confirmButtonText: "OK",
-          confirmButtonColor: "#4F46E5",
-        });
+        if (isPlatformBrowser(this.platformId)) {
+          // Check if running in browser before showing SweetAlert
+          Swal.fire({
+            icon: "error",
+            title: "Error Fetching Bookings",
+            text:
+              error.message ||
+              error.error?.message ||
+              "There was a problem loading bookings data.",
+            confirmButtonText: "OK",
+            confirmButtonColor: "#4F46E5",
+          });
+        }
       }
     );
   }
@@ -240,43 +252,52 @@ export class BookingManagementComponent implements OnInit, AfterViewInit {
 
   // Delete booking with confirmation
   deleteBookingDetails(booking: any): void {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Yes, delete it!",
-      cancelButtonText: "No, cancel!",
-      confirmButtonColor: "#dc2626",
-      cancelButtonColor: "#6B7280",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.isLoading = true;
-        this.bookingService.deleteBooking(booking.paymentId).subscribe(
-          (response) => {
-            this.isLoading = false;
-            Swal.fire({
-              icon: "success",
-              title: "Booking Deleted!",
-              text: "The booking has been deleted successfully.",
-              confirmButtonText: "OK",
-              confirmButtonColor: "#4F46E5",
-            });
-            this.getAllBookings();
-          },
-          (error) => {
-            this.isLoading = false;
-            Swal.fire({
-              icon: "error",
-              title: "Error Deleting Booking!",
-              text: error.error?.message || "Failed to delete booking.",
-              confirmButtonText: "OK",
-              confirmButtonColor: "#4F46E5",
-            });
-          }
-        );
-      }
-    });
+    if (isPlatformBrowser(this.platformId)) {
+      // Check if running in browser before showing SweetAlert
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, delete it!",
+        cancelButtonText: "No, cancel!",
+        confirmButtonColor: "#dc2626",
+        cancelButtonColor: "#6B7280",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.isLoading = true;
+          this.bookingService.deleteBooking(booking.paymentId).subscribe(
+            (response) => {
+              this.isLoading = false;
+              if (isPlatformBrowser(this.platformId)) {
+                // Check if running in browser before showing SweetAlert
+                Swal.fire({
+                  icon: "success",
+                  title: "Booking Deleted!",
+                  text: "The booking has been deleted successfully.",
+                  confirmButtonText: "OK",
+                  confirmButtonColor: "#4F46E5",
+                });
+              }
+              this.getAllBookings();
+            },
+            (error) => {
+              this.isLoading = false;
+              if (isPlatformBrowser(this.platformId)) {
+                // Check if running in browser before showing SweetAlert
+                Swal.fire({
+                  icon: "error",
+                  title: "Error Deleting Booking!",
+                  text: error.error?.message || "Failed to delete booking.",
+                  confirmButtonText: "OK",
+                  confirmButtonColor: "#4F46E5",
+                });
+              }
+            }
+          );
+        }
+      });
+    }
   }
 
   // Apply filter for search functionality

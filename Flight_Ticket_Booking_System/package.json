@@ -8,8 +8,8 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "dev:ssr": "ng run flight_ticket_booking_system:serve-ssr",
-    "serve:ssr": "node dist/flight_ticket_booking_system/server/main.js",
-    "build:ssr": "node prepare-env.js && ng build && ng run flight_ticket_booking_system:server",
+    "serve:ssr": "node dist/flight_ticket_booking_system/server.mjs",
+    "build:ssr": "node --max-old-space-size=4096 prepare-env.js && ng build && ng run flight_ticket_booking_system:server",
     "build:prod": "node prepare-env.js && ng build --configuration production && ng run flight_ticket_booking_system:server",
     "vercel-build": "npm run build:prod",
     "serve:ssr:flight_ticket_booking_system": "node dist/flight_ticket_booking_system/server/main.js"

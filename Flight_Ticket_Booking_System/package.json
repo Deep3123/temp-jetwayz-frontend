@@ -8,11 +8,10 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "dev:ssr": "ng run flight_ticket_booking_system:serve-ssr",
-    "serve:ssr": "node dist/flight_ticket_booking_system/server.mjs",
-    "build:ssr": "node --max-old-space-size=4096 prepare-env.js && ng build && ng run flight_ticket_booking_system:server",
+    "serve:ssr": "node dist/flight_ticket_booking_system/server/server.mjs",
+    "build:ssr": "node prepare-env.js && ng build && ng run flight_ticket_booking_system:server",
     "build:prod": "node prepare-env.js && ng build --configuration production && ng run flight_ticket_booking_system:server",
-    "vercel-build": "npm run build:prod",
-    "serve:ssr:flight_ticket_booking_system": "node dist/flight_ticket_booking_system/server/main.js"
+    "vercel-build": "npm run build:prod"
   },
   "private": true,
   "dependencies": {
@@ -50,6 +49,7 @@
     "@types/express": "^4.17.17",
     "@types/jasmine": "~5.1.0",
     "@types/node": "^18.18.0",
+    "browser-sync": "^3.0.4",
     "dotenv": "^16.5.0",
     "jasmine-core": "~5.6.0",
     "karma": "~6.4.0",

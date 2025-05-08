@@ -134,6 +134,19 @@
             "routesFile": "prerender.routes.txt",
             "guessRoutes": false
           }
+        },
+        "serve-ssr": {
+          "builder": "@angular-devkit/build-angular:ssr-dev-server",
+          "options": {
+            "browserTarget": "flight_ticket_booking_system:build",
+            "serverTarget": "flight_ticket_booking_system:server"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "flight_ticket_booking_system:build:production",
+              "serverTarget": "flight_ticket_booking_system:server:production"
+            }
+          }
         }
       }
     }
